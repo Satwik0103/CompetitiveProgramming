@@ -1,0 +1,14 @@
+For c++
+1)using scanf and printf instead of cin and cout operations
+2)using \n instead of endl
+3)use of ios_base::sync_with_stdio(false); lines
+4)Eg
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    return 0;
+}
