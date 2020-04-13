@@ -1,0 +1,70 @@
+Answer
+#include <iostream>
+using namespace std;
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    long long int t,i;
+    scanf("%lld",&t);
+    while(t--)
+    {
+        long long int n,p;
+        scanf("%lld",&n);
+        p=n/2;
+        if(n!=1)
+        printf("%lld\n",p);
+        else
+        printf("1\n");
+        for(i=1;i<=n;i++)
+        {
+            if(i%4==0)
+            {
+                if(n==i+1)
+                {
+                    //cout<<2<<"\t"<<i<<" "<<n;
+                    printf("2 %lld %lld\n",i,n);
+                    
+                    break;
+                }
+                else
+                {
+                   // cout<<1<<" "<<i;
+                    printf("1 %lld\n",i);
+                   // cout<<endl;
+                }
+            }
+            else
+            {
+               // cout<<3<<" "<<i<<" "<<i+1<<" "<<i+2<<endl;
+               if(n>2)
+               {
+                if(i+2<=n)
+                {
+                printf("3 %lld %lld %lld\n",i,i+1,i+2);
+                i=i+2;
+                }
+                else if(i+1<=n)
+                {
+                printf("2 %lld %lld\n",i,i+1);
+                i=i+1;
+                }
+               }
+               else
+               {
+               if(n==1)
+               {
+                  printf("1 1\n");
+                  break;
+               }
+               else if(n==2)
+               {
+                   printf("1 1 2\n");
+                   break;
+               }
+               }
+            }
+        }
+    }
+	return 0;
+}
+
