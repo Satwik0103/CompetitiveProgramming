@@ -1,0 +1,19 @@
+Library files you can use in c++
+
+vector : Dynamic Sized Array that allows insertions and deletions without caring of size of the array. It also has advantages of plain arrays like random access  and cache friendliness.  C++ vector supports many additional operations like erase(), push_front(), insert(), etc.
+
+queue : Useful in situations where we wish to have FIFO order of items. Example problems are, generate numbers with given digit, first non-repeating character in a stream,  level order traversal of a tree and its variations, BFS of a graph and its variations.  Please refer Queue practice problems for more practice.
+
+stack : Used in situations where we wish to have LIFO order. Example problems are balanced parenthesis, stock span problem, next greater element and  largest area in a histogram.  Please refer Stack practice problems for more practice.
+
+set and map : Both of these implement self balancing binary search tree (Red Black Tree in particular). Useful in situations where we wish to maintain sorted items with moderate (better than array and worse than hashing) search, insert and delete query time. Example problems are, Closest greater or same value on left side, Find closest value for every element in array, etc. We use set when we wish to store only keys and map when we wish to store key value pairs.  
+
+unordered_set and unordered_map : Both of these implement hashing with chaining. Useful when we wish to have fast search, insert and delete (all three operations are O(1)).  This is one of the most used data structures in the industry and most underrated in academics. There are many popular problems, count distinct elements, frequencies of array items,  subarray with 0 sum and  union and intersection of two unsorted arrays.  Please refer Hashing Practice Problems for more practice.
+
+priority_queue : Implement Max Heap by default. We can create a Min Heap also.  It is used whenever we wish to efficiently find minimum or maximum element.  It is used to implement popular algorithms like Prim’s Algorithm, Dijkstra’s shortest Path, Huffman Coding, K Largest Elements, Maximum Toys to Purchase and Merge K Sorted Arrays,  Median of a Stream.  Please refer Heap Practice Problems for more practice.
+
+deque :  Dequeue supports insertions and deletions at both ends in O(1) time.  Since it is implemented using array, it allows random access also. We can use dequeue to implement Queue and Stack both.  Example problems on Deque are, visit all petrol pumps  and maximums of all subarrays of size k.
+
+We will be covering more important C++ libraries in next part of this article.
+
+ 
