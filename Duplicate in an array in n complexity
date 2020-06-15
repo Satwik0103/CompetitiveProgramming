@@ -1,0 +1,36 @@
+#include <bits/stdc++.h> 
+using namespace std; 
+  
+int main() 
+{ 
+      
+    int numRay[] = {0, 4, 3, 2, 7, 8, 2, 3, 1}; 
+    int arr_size = sizeof(numRay) /  
+                   sizeof(numRay[0]);  
+    for (int i = 0; i < arr_size; i++) 
+    { 
+        numRay[numRay[i] % arr_size] = numRay[numRay[i] % arr_size] + arr_size; 
+    } 
+    cout << "The repeating elements are : " << endl; 
+    for (int i = 0; i < arr_size; i++)  
+    { 
+        if (numRay[i] >= arr_size*2)  
+        { 
+            cout << i << " " << endl; 
+        } 
+    } 
+    return 0; 
+    
+   // For Understanding -
+   //Given Input-0,4,3,2,7,8,2,3,1
+    
+    Value of i          numray[numray[i]%arr_size]        Value
+    0                         numray[0]                   0+9=9
+    1                         numray[4]                  7+9=16
+    2                         numray[3]                  2+9=11
+    3                         numray[2]                  3+9=12
+    4                         numray[7]                  3+9=12
+    5                         numray[8]                  1+9=10
+    6                         numray[2]                 12+9=21 as>18  duplicate
+    7                         numray[3]                 11+9=20 as>18  duplicate
+    8                         numray[1]                  4+9=13 
