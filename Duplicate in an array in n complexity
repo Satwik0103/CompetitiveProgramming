@@ -34,3 +34,6 @@ int main()
     6                         numray[2]                 12+9=21 as>18  duplicate
     7                         numray[3]                 11+9=20 as>18  duplicate
     8                         numray[1]                  4+9=13 
+    
+    Hash table (also, hash map) is a data structure that basically maps keys to values. A hash table uses a hash function to compute an index into an array of buckets or slots, from which the corresponding value can be found.
+
