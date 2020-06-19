@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n,i;
+    cin>>n;
+    int a[n+1],t[n+1]={0};              // taking a temporary array and initializing with 0
+    for(i=1;i<=n;i++)
+    {
+        cin>>a[i];
+        t[a[i]]=t[a[i]]+1;            // counting the no of elements
+    }
+    for(i=1;i<=n;i++)
+    {
+        if(t[i]>1)                        // if count of some element in array is greater than 1 then that element is repeated 
+        {
+            cout<<"Repeated value is"<<i<<endl;
+        }
+        else if(t[i]==0)                  // if count of element is 0 in 1 to n array that element is missing 
+        {
+            cout<<"Missing value is"<<i<<endl;
+        }
+    }
+    return 0;
+}
+
+	
