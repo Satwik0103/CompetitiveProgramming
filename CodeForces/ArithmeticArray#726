@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+#define ll long long
+#define mod 1000000007
+#define pb push_back
+using namespace std;
+void solve()
+{
+	ll t;
+	cin>>t;
+	while(t--){
+	ll n,s=0;
+	cin>>n;
+	vector<int>a(n);
+	for(ll i=0;i<n;i++)
+	{
+		cin>>a[i];
+	}
+	for(ll i=0;i<n;i++)
+	{
+		s=s+a[i];
+	}
+		if(s==n)
+		{
+			cout<<"0"<<endl;
+		}
+		else
+		{
+			
+				if(s>=n)
+			cout<<s-n<<endl;
+			else
+				cout<<1<<endl;
+		}
+	
+}
+}
+int main() {
+    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+        solve();
+}
