@@ -1,0 +1,21 @@
+#include<bits/stdc++.h>
+#define ll long long
+#define mod 1000000007
+#define pb push_back
+using namespace std;
+void solve()
+{
+	ll t;
+	cin>>t;
+	while(t--){
+		ll n,m,i,j,x1,y1,x2,y2,a,b,c,d,e,f;
+		cin>>n>>m>>i>>j;
+		cout<<"1 "<<"1 "<<n<<" "<<m<<" "<<endl;
+
+	}
+	
+}
+int main() {
+    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+        solve();
+}
