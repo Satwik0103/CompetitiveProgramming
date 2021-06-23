@@ -1,0 +1,15 @@
+Ther are different type of stl
+1)Vector
+2)Map
+-ordered 
+-unordered
+3)Set
+4)Pair
+
+Format
+vector<int>v;
+map<int,int>m;
+pair<int,int>p
+vector<pair<int,int>>vp
+vector<vector<int>>v;
+vector<map<int,int>>vm
