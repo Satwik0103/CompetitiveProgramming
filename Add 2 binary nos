@@ -1,0 +1,67 @@
+class Solution {
+public:
+    string addBinary(string a, string b) {
+          int i=0;
+        char d='0';
+        string c;
+       
+        //Making string of equal length
+        int lena=a.length();
+        int lenb=b.length();
+        int len;
+        if(lena>lenb){
+           return addBinary(b,a);
+        }
+            int dif=lenb-lena;
+            for(int k=0;k<dif;k++){
+                a='0'+a;
+            }
+            len=lenb;
+         for (int i =len-1; i >= 0; i--) {
+           
+             if(a[i]=='0'&&b[i]=='0'){
+                if(d!='0'){
+                    c.push_back('1');
+                    d='0';
+                }
+                else{
+                c.push_back('0');
+                d='0';
+                }
+            }
+            if(a[i]!=b[i]){
+                if(d!='0'){
+                    c.push_back('0');
+                    d='1';
+                }
+                else{
+                    c.push_back('1');
+                    d='0';
+                }
+            }
+            if(a[i]=='1'&&b[i]=='1'){
+                if(d!='0'){
+                    c.push_back('1');
+                    d='1';
+                }
+                else{
+                c.push_back('0');
+                d='1';}
+                
+             } 
+          
+         }
+         
+         if (d=='1'){
+         c.push_back(d);
+         }
+         
+        // reverse the result
+        reverse(c.begin(), c.end());
+        
+        int index = 0;
+        while (index + 1 < c.length() && c[index] == '0')
+        index++;
+        return (c.substr(index));  
+    }
+};
