@@ -1,0 +1,33 @@
+C++ code----
+class Solution {
+public:
+    int minPartitions(string n) {
+        char max=-1;
+        int a;
+        for(int i=0;i<n.length();i++){
+            if(n[i]>max){
+                //cout<<n[i];
+                max=n[i];
+               // cout<<max;
+            }
+        }
+        a=int(max)-48;
+        return a;
+    }
+};
+
+
+
+Java code-----
+class Solution {
+    public int minPartitions(String n) {
+        char max='0';
+        for(int i=0;i<n.length();i++) {
+            if(n.charAt(i)>max) {
+                max=n.charAt(i);
+            }
+        }
+        int a=Character.getNumericValue(max);  
+        return a;
+    }
+}
