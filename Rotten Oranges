@@ -1,0 +1,113 @@
+class Solution {
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+         vector<int> dx={-1, 0, 0, 1};
+          vector<int> dy={0, -1, 1, 0};
+    
+     int m=grid.size(); //No of rows
+	int n=grid[0].size(); //No of columns
+	int total=0,cnt=0,days=0,i,j;
+	 queue<pair<int, int> >q;
+	 for(i=0;i<m;i++){
+	     for(j=0;j<n;j++){
+	         if(grid[i][j]!=0)
+	             total+=1;
+	         
+	         if(grid[i][j]==2)
+	             q.push({i,j});
+	         
+	     }
+	     
+	 }
+	   while (!q.empty()) {
+        int k=q.size();
+        cnt+=k;
+        while(k--){
+            int x=q.front().first,y=q.front().second;
+        q.pop();
+        for(i=0;i<4;i++){
+            int nx=x+dx[i],ny=y+dy[i];
+            if(nx<0 || ny<0 || nx>=m || ny>=n || grid[nx][ny]!=1)
+            continue;
+            grid[nx][ny]=2;
+            q.push({nx,ny});
+        }
+        }
+        if(!q.empty())
+        days++;
+    }
+    int result;
+    if(cnt==total)
+        result=days;
+    else
+    result=-1;
+	 return result;
+	 
+    }
+};
+
+
+
+
+
+Java
+
+
+
+class Solution {
+    public int orangesRotting(int[][] grid) {
+        
+        int dx[]={0,-1,0,1}; 
+        int dy[]={-1,0,1,0}; 
+        
+        int m=grid.length;   //rows
+        int n=grid[0].length;      //columns
+        int minutes=0;
+        int total=0;
+        int count=0;
+        Queue<int[]> queue=new LinkedList();
+        for(int i=0;i<m;i++) {
+            for(int j=0;j<n;j++) {
+                if(grid[i][j]!=0) {
+                    total++;
+                }
+                if(grid[i][j]==2) {  
+                    queue.add(new int[]{i, j});
+                }
+            }
+        }
+        
+        while(!queue.isEmpty()) {     //until queue is empty
+            int k=queue.size();
+            count+=k;
+            while(k--!=0)    {          //for traversing whole queue 
+                
+                int[] currentOrange= queue.poll();  //fetches and removes peek element
+                int x=currentOrange[0];
+                int y=currentOrange[1];
+                for(int i=0;i<4;i++) {
+                    
+                    int nx=x+dx[i];
+                    int ny=y+dy[i];
+                    if(nx<0 || ny<0 || nx>=m || ny>=n || grid[nx][ny]!=1) {
+                        continue;
+                    }
+                    grid[nx][ny]=2;
+
+                    queue.add(new int[]{nx, ny});
+
+                }
+               
+                
+            }
+            if(!queue.isEmpty()) {
+                minutes++;
+            }
+             
+            
+        }
+       return (total==count)?minutes:-1;
+        
+        
+    }
+}
