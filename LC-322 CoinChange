@@ -1,0 +1,25 @@
+#define inf 1000000000
+class Solution {
+public:
+    int n, coin[20], dp[10005];
+    
+    int solve(int w) {
+        if(w == 0) return 0;
+        if(dp[w] != -1) return dp[w];
+
+        int ans = inf;
+        for(int i=0; i<n; i++) {
+            if(w - coin[i] >= 0) ans = min(ans, 1 + solve(w - coin[i])); 
+        }
+        return dp[w] = ans;
+    }
+    
+    int coinChange(vector<int>& coins, int amount) {
+        n = coins.size();
+        for(int i=0; i<n; i++) coin[i] = coins[i];
+        for(int i=0; i<10005; i++) dp[i] = -1;
+        int ans = solve(amount);
+        if(ans == inf) return -1;
+        else return ans;
+    }
+};
