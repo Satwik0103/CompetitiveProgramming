@@ -1,0 +1,70 @@
+class Solution
+{
+    public:
+    //Function to find the maximum number of cuts.
+    int solveRec(int n,vector<int>&arr){
+        int max=INT_MIN;
+        if(n==0)
+        return 0;
+        
+        if(n<0)
+        return INT_MIN;
+        
+        for(int i=0;i<3;i++){
+        int ans=solveRec(n-arr[i],arr)+1;
+        if(max<ans)
+        max=ans;
+        }
+        return max;
+    }
+      int solveMem(int n,vector<int>&arr,vector<int>&dp){
+        int max=INT_MIN;
+        if(n==0)
+        return 0;
+        
+        if(n<0)
+        return INT_MIN;
+        
+        if(dp[n]!=-1)
+        return dp[n];
+        
+        for(int i=0;i<3;i++){
+        int ans=solveMem(n-arr[i],arr,dp)+1;
+        if(max<ans)
+        max=ans;
+      }
+        dp[n]=max;
+        return max;
+    }
+    
+    int solveTab(int n,vector<int>&arr){
+       vector<int>dp(n+1,INT_MIN);
+       dp[0]=0;
+       for(int i=1;i<=n;i++){
+           for(int j=0;j<3;j++){
+               if(i-arr[j]>=0 && dp[i-arr[j]]!=INT_MAX )
+                dp[i]=max(dp[i],1+dp[i-arr[j]]); 
+               }
+           }
+       return dp[n];
+    }
+    
+    int maximizeTheCuts(int n, int x, int y, int z)
+    {
+        //Your code here
+        vector<int>arr;
+        arr.push_back(x);
+        arr.push_back(y);
+        arr.push_back(z);
+        //int ans=solveRec(n,arr);
+        
+        //vector<int>dp(n+1,-1);
+        //int ans =solveMem(n,arr,dp);
+        
+        int ans=solveTab(n,arr);
+        
+        if(ans<0)
+        return 0;
+        return ans;
+    }
+};
