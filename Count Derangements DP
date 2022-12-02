@@ -1,0 +1,53 @@
+#define MOD 1000000007
+# include<bits/stdc++.h>
+long long int solveMem(int n,vector<long long int> &dp){
+    if(n==1)
+        return 0;
+    if(n==2)
+        return 1;
+    if(dp[n]!=-1)
+        return dp[n];
+    dp[n]=(((solveMem(n-1,dp))%MOD+(solveMem(n-2,dp))%MOD)*(n-1))%MOD;
+        return dp[n];
+        
+}
+long long int solveTab(int n){
+    vector<long long int>dp(n+1,0);
+    dp[1]=0;
+    dp[2]=1;
+    for(long long int i=3;i<=n;i++){
+        dp[i]=(((dp[i-1])%MOD+(dp[i-2])%MOD)*(i-1))%MOD;
+    }
+    return dp[n];    
+}
+
+long long int solvespaceOpt(int n){
+    long long int prev2=0;
+    long long int prev1=1;
+    long long int ans=prev1;
+    for(long long int i=3;i<=n;i++){
+        ans=(((prev1)%MOD+(prev2)%MOD)*(i-1))%MOD;
+        prev2=prev1;
+        prev1=ans;
+    }
+    return ans;  
+}
+
+long long int countDerangements(int n) {
+    // Write your code here.
+    
+    //Recursion
+//     long long int ans=(((countDerangements(n-1))%MOD+(countDerangements(n-2))%MOD)*(n-1))%MOD;
+    
+    //DP(Memoization+Recursion)
+  //  vector<long long int>dp(n+1,-1);
+    //long long int ans=solveMem(n,dp);
+    
+    //Tabulation
+    //long long int ans=solveTab(n);
+    
+    //Space optimization
+    long long int ans=solvespaceOpt(n);
+    
+    return ans;
+}
