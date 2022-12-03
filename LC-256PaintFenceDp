@@ -1,0 +1,56 @@
+# define MOD 1000000007
+#include <bits/stdc++.h> 
+int solveRec(int n,int k){
+    if(n==1)
+        return k;
+    if(n==2)
+        return k*k;
+    int ans=(solveRec(n-2,k)*(k-1)+solveRec(n-1,k)*(k-1))%MOD;
+    return ans;
+    
+}
+int solveMem(int n,int k,vector<int>&dp){
+    if(n==1)
+        return (k%MOD);
+    if(n==2)
+        return (k*1LL*k)%MOD;
+    if(dp[n]!=-1)
+        return dp[n];
+    long long int ans=((solveMem(n-2,k,dp)*1LL*(k-1))%MOD+(solveMem(n-1,k,dp)*1LL*(k-1))%MOD)%MOD;
+    dp[n]=ans;
+    return ans;
+    
+}
+int solveTab(int n,int k){
+    vector<int>dp (n+1,k);
+    dp[2]=(k*1LL*k)%MOD;
+    for(int i=3;i<=n;i++){
+        dp[i]=((dp[i-1]*1LL*(k-1))%MOD+(dp[i-2]*1LL*(k-1))%MOD)%MOD;
+    }
+    return dp[n];
+}
+
+int solveSpace(int n,int k){
+    int ans;
+    int prev2=k;
+    int prev1=(k*1LL*k)%MOD;
+    for(int i=3;i<=n;i++){
+        ans=((prev1*1LL*(k-1))%MOD+(prev2*1LL*(k-1))%MOD)%MOD;
+        prev2=prev1;
+        prev1=ans;
+    }
+    return prev1;
+}
+
+int numberOfWays(int n, int k) {
+    // Write your code here.
+    //int ans=solveRec(n,k);
+    
+//     vector<int>dp(n+1,-1);
+//     int ans=solveMem(n,k,dp);
+    
+    //int ans=solveTab(n,k);
+    
+    int ans=solveSpace(n,k);
+        return ans;
+}
