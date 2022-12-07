@@ -1,0 +1,105 @@
+#include <bits/stdc++.h> 
+int solveRec(vector<int> weight, vector<int> value, int n, int W){
+    if(n==0){
+        if(weight[0]<=W)
+            return value[0];
+        else
+            return 0;
+    }
+    int include=0;
+    if(weight[n]<=W)
+        include=+value[n]+solveRec(weight,value,n-1,W-weight[n]);
+        int exclude=solveRec(weight,value,n-1,W);
+        int ans=max(include,exclude);
+    
+    return ans;
+    
+}
+int solveMem(vector<int> weight, vector<int> value, int n, int W,vector<vector<int>>&dp){
+    if(n==0){
+        if(weight[0]<=W)
+            return value[0];
+        else
+            return 0;
+    }
+    
+    if(dp[n][W]!=-1)
+        return dp[n][W];
+    
+    int include=0;
+    if(weight[n]<=W)
+        include=solveMem(weight,value,n-1,W-weight[n],dp)+value[n];
+        int exclude=solveMem(weight,value,n-1,W,dp);
+         dp[n][W]=max(include,exclude);
+    return  dp[n][W];
+}
+
+int solveTab(vector<int> weight, vector<int> value, int n, int W){
+    vector<vector<int> >dp(n,vector<int>(W+1,0));
+    for(int w=weight[0];w<=W;w++){
+        if(weight[0]<=W)
+           dp[0][w]=value[0];
+        else
+            dp[0][w]=0;
+    }
+  
+    for(int i=1;i<n;i++){
+        for(int w=0;w<=W;w++){
+             int include=0;
+        if(weight[i]<=w)
+              include=value[i]+dp[i-1][w-weight[i]];
+         int exclude=dp[i-1][w];
+         dp[i][w]=max(include,exclude); 
+    }
+    }
+     return  dp[n-1][W];  
+}
+
+int solveSpaceOpt(vector<int> weight, vector<int> value, int n, int W){
+    
+    //Space complexity--O(W)
+    
+  // vector<int>prev(W+1,0);
+    vector<int>curr(W+1,0);
+    for(int w=weight[0];w<=W;w++){
+        if(weight[0]<=W)
+          // prev[w]=value[0];
+            curr[w]=value[0];
+        else
+         //   prev[w]=0;
+            curr[w]=0;
+    }
+  
+    for(int i=1;i<n;i++){
+       // for(int w=0;w<=W;w++){
+        for(int w=W;w>0;w--){
+             int include=0;
+        if(weight[i]<=w)
+              include=value[i]+curr[w-weight[i]];
+             // include=value[i]+prev[w-weight[i]];
+          
+//          int exclude=prev[w];
+             int exclude=curr[w];
+         curr[w]=max(include,exclude); 
+    }
+       // prev=curr;
+    }
+   // return prev[W]
+     return  curr[W];  
+}
+
+
+int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) 
+{
+	// Write your code here
+   // int ans=solveRec(weight,value,n,maxWeight);
+    
+//     vector<vector<int> >dp(n,vector<int>(maxWeight+1,-1));
+//         int ans=solveMem(weight,value,n-1,maxWeight,dp);
+    
+   //  int ans=solveTab(weight,value,n,maxWeight);
+    
+    int ans=solveSpaceOpt(weight,value,n,maxWeight);
+    
+    return ans;
+}
