@@ -1,0 +1,70 @@
+class Solution {
+public:
+int solveRec(vector<int>&days,vector<int>&costs,int i){
+    int n=days.size();
+    if(i>=n)
+    return 0;
+    //1day
+    int a=solveRec(days,costs,i+1)+costs[0];
+    //7days
+    int k;
+    for(k=i;k<n && days[k]<days[i]+7;k++);//Just to increment value of k
+    int b=solveRec(days,costs,k)+costs[1];
+    //30 days
+    for( k=i;k<n && days[k]<days[i]+30;k++);
+    int c=solveRec(days,costs,k)+costs[2];
+    return min(min(a,b),c);
+}
+int solveMem(vector<int>&days,vector<int>&costs,int i,vector<int>&dp){
+    int n=days.size();
+    if(i>=n)
+    return 0;
+
+    if(dp[i]!=-1)
+    return dp[i];
+
+    //1day
+    int a=solveMem(days,costs,i+1,dp)+costs[0];
+
+    //7days
+    int k;
+    for(k=i;k<n && days[k]<days[i]+7;k++);//Just to increment value of k
+    int b=solveMem(days,costs,k,dp)+costs[1];
+
+    //30 days
+    for( k=i;k<n && days[k]<days[i]+30;k++);
+    int c=solveMem(days,costs,k,dp)+costs[2];
+    dp[i]= min(min(a,b),c);
+    return dp[i];
+}
+
+int solveTab(vector<int>&days,vector<int>&costs){
+    int n=days.size();
+       vector<int>dp(n+1,1005);
+       dp[n]=0;
+       for(int z=n-1;z>=0;z--){
+            //1day
+            int a=dp[z+1]+costs[0];
+
+            //7days
+            int k;
+            for(k=z;k<n && days[k]<days[z]+7;k++);//Just to increment value of k
+            int b=dp[k]+costs[1];
+
+            //30 days
+            for( k=z;k<n && days[k]<days[z]+30;k++);
+            int c=dp[k]+costs[2];
+            dp[z]= min(min(a,b),c);
+       }
+    return dp[0];
+}
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+        int n=days.size();
+       // vector<int>dp(n+1,-1);
+        //int ans=solveRec(days,costs,0);
+      //  int ans=solveMem(days,costs,0,dp);
+        int ans=solveTab(days,costs);
+        return ans;
+        
+    }
+};
