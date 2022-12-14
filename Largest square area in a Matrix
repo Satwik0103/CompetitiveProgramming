@@ -1,0 +1,104 @@
+class Solution{
+public:
+int solveRec(vector<vector<int>> &mat,int i,int j,int maxi){
+    if(i>=mat.size()|| j>=mat[0].size()){
+        return 0;
+    }
+    else{
+        int right=solveRec(mat,i,j+1,maxi);
+        int bottom=solveRec(mat,i+1,j,maxi);
+        int diagnol=solveRec(mat,i+1,j+1,maxi);
+        if(mat[i][j]==1){
+            int ans=1+min(bottom,min(right,diagnol));
+            maxi=max(maxi,ans);
+            return ans;
+            
+        }
+        else{
+            return 0;
+        }
+    }
+}
+int solveMem(vector<vector<int>> &mat,int i,int j,int &maxi,vector<vector<int>>&dp){
+    if(i>=mat.size()|| j>=mat[0].size()){
+        return 0;
+    }
+    if(dp[i][j]!=-1)
+    return dp[i][j];
+  
+        int right=solveMem(mat,i,j+1,maxi,dp);
+        int bottom=solveMem(mat,i+1,j,maxi,dp);
+        int diagnol=solveMem(mat,i+1,j+1,maxi,dp);
+        if(mat[i][j]==1){
+            dp[i][j]=1+min(bottom,min(right,diagnol));
+            maxi=max(maxi,dp[i][j]);
+            return dp[i][j];
+            
+        }
+        else{
+            return dp[i][j]= 0;
+        }
+}
+int solveTab(vector<vector<int>> &mat,int &maxi){
+    int n=mat.size();
+    int m=mat[0].size();
+    vector<vector<int>>dp(n+1,vector<int>(m+1,0));
+  
+    for(int i=n-1;i>=0;i--){
+        for(int j=m-1;j>=0;j--){
+            int right=dp[i][j+1];
+            int bottom=dp[i+1][j];
+            int diagnol=dp[i+1][j+1];
+            if(mat[i][j]==1){
+                dp[i][j]=1+min(bottom,min(right,diagnol));
+                maxi=max(maxi,dp[i][j]);
+            }
+            else{
+                dp[i][j]=0;
+            }
+        }
+    }
+            return dp[0][0];
+}
+int solveSpaceOpt(vector<vector<int>> &mat,int &maxi){
+    int n=mat.size();
+    int m=mat[0].size();
+    vector<int>cur(m+1,0);
+    vector<int>next(m+1,0);
+  
+    for(int i=n-1;i>=0;i--){
+        for(int j=m-1;j>=0;j--){
+            int right=cur[j+1];
+            int bottom=next[j];
+            int diagnol=next[j+1];
+            if(mat[i][j]==1){
+                cur[j]=1+min(bottom,min(right,diagnol));
+                maxi=max(maxi,cur[j]);
+            }
+            else{
+                cur[j]=0;
+            }
+        }
+        next=cur;
+    }
+            return next[0];
+}
+    int maxSquare(int n, int m, vector<vector<int>> mat){
+        // code here
+        // int maxVal=0;
+        // solveRec(mat,0,0,maxVal);
+        // return maxVal;
+        
+        //int maxi=0;
+        // vector<vector<int> >dp(n,vector<int>(m,-1));
+        // solveMem(mat,0,0,maxi,dp);
+        
+        // int maxi=0;
+        // solveTab(mat,maxi);
+        
+        int maxi=0;
+        solveSpaceOpt(mat,maxi);
+        return maxi;
+        
+    }
+};
