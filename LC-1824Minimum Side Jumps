@@ -1,0 +1,103 @@
+class Solution {
+public:
+int solveRec(vector<int>& obstacles,int currLane,int pos){
+    int n=obstacles.size()-1;
+    if(pos==n)
+    return 0;
+    if(obstacles[pos+1]!=currLane){
+        return solveRec(obstacles,currLane,pos+1);
+    }
+    else{
+    int ans=INT_MAX;
+    for(int i=1;i<=3;i++){
+        if(currLane!=i && obstacles[pos]!=i)
+        ans=min(ans,1+solveRec(obstacles,i,pos));
+    }
+     return ans;
+    }
+}
+int solveMem(vector<int>& obstacles,int currLane,int pos, vector<vector<int>>&dp){
+    int n=obstacles.size()-1;
+    if(pos==n)
+    return 0;
+    if(dp[currLane][pos]!=-1){
+        return dp[currLane][pos];
+    }
+    if(obstacles[pos+1]!=currLane){
+        return solveMem(obstacles,currLane,pos+1,dp);
+    }
+    else{
+    int ans=INT_MAX;
+    for(int i=1;i<=3;i++){
+        if(currLane!=i && obstacles[pos]!=i)
+        ans=min(ans,1+solveMem(obstacles,i,pos,dp));
+    }
+    dp[currLane][pos]=ans;
+     return ans;
+    }
+}
+int solveTab(vector<int>& obstacles){
+    int n=obstacles.size()-1;
+    vector<vector<int>>dp(4,vector<int> (obstacles.size(),1e9));
+    dp[0][n]=0;
+    dp[1][n]=0;
+    dp[2][n]=0;
+    dp[3][n]=0;
+    for (int pos=n-1;pos>=0;pos--){
+    for(int currLane=1;currLane<4;currLane++){
+        if(obstacles[pos+1]!=currLane){
+        dp[currLane][pos]= dp[currLane][pos+1];
+    }
+    else{
+    int ans=1e9;
+    for(int i=1;i<=3;i++){
+        if(currLane!=i && obstacles[pos]!=i)
+        ans=min(ans,1+dp[i][pos+1]);
+    }
+    dp[currLane][pos]=ans;
+    }
+    }
+    }
+    return min(dp[2][0],min(1+dp[3][0],1+dp[1][0]));
+}
+int solveSpaceOpt(vector<int>& obstacles){
+    int n=obstacles.size()-1;
+    vector<vector<int>>dp(4,vector<int> (obstacles.size(),1e9));
+    vector<int>curr(4,INT_MAX);
+    vector<int>next(4,INT_MAX);
+    next[0]=0;
+    next[1]=0;
+    next[2]=0;
+    next[3]=0;
+    for (int pos=n-1;pos>=0;pos--){
+    for(int currLane=1;currLane<4;currLane++){
+        if(obstacles[pos+1]!=currLane){
+        curr[currLane]= next[currLane];
+    }
+    else{
+    int ans=1e9;
+    for(int i=1;i<=3;i++){
+        if(currLane!=i && obstacles[pos]!=i)
+        ans=min(ans,1+next[i]);
+    }
+    curr[currLane]=ans;
+    }
+    }
+    next=curr;
+    }
+    return min(next[2],min(1+next[3],1+next[1]));
+
+}
+    int minSideJumps(vector<int>& obstacles) {
+        // int ans=solveRec(obstacles,2,0);
+
+        // vector<vector<int>>dp(4,vector<int> (obstacles.size(),-1));
+        // int ans=solveMem(obstacles,2,0,dp);
+
+        //int ans=solveTab(obstacles);
+        int ans=solveSpaceOpt(obstacles);
+
+        return ans;
+        
+    }
+};
