@@ -1,0 +1,73 @@
+class Solution {
+public:
+    int solveRec(vector<int>& satisfaction,int time,int index){
+        int n=satisfaction.size();
+        if(index==n){
+            return 0;
+        }
+        int ans=0;
+        int exclude=solveRec(satisfaction,time,index+1);
+        int include=(satisfaction[index]*time)+solveRec(satisfaction,time+1,index+1);
+        ans=max(include,exclude);
+        return ans;
+    }
+int solveMem(vector<int>& satisfaction,int time,int index,vector<vector<int>>& dp){
+        int n=satisfaction.size();
+        if(index==n){
+            return 0;
+        }
+        if(dp[index][time]!=-1)
+        return dp[index][time];
+        int ans=0;
+        int exclude=solveMem(satisfaction,time,index+1,dp);
+        int include=(satisfaction[index]*time)+solveMem(satisfaction,time+1,index+1,dp);
+        ans=max(include,exclude);
+        dp[index][time]=ans;
+        return ans;
+    }
+
+int solveTab(vector<int>& satisfaction){
+        int n=satisfaction.size();
+        vector<vector<int>>dp(n+1,vector<int>(n+1,0));
+        for(int index=n-1;index>=0;index--){
+            for(int time=index;time>=0;time--){
+                int ans=0;
+                int exclude=dp[index+1][time];
+                int include=(satisfaction[index]*(time+1))+dp[index+1][time+1];
+                ans=max(include,exclude);
+                dp[index][time]=ans;
+            }
+        }
+        return dp[0][0];
+    }
+
+    int solveSpaceOpt(vector<int>& satisfaction){
+        int n=satisfaction.size();
+        vector<int>curr(n+1,0);
+        vector<int>next(n+1,0);
+       // vector<vector<int>>dp(n+1,vector<int>(n+1,0));
+        for(int index=n-1;index>=0;index--){
+            for(int time=index;time>=0;time--){
+                int ans=0;
+                int exclude=next[time];
+                int include=(satisfaction[index]*(time+1))+next[time+1];
+                ans=max(include,exclude);
+                curr[time]=ans;
+            }
+            next=curr;
+        }
+        return next[0];
+    }
+
+    int maxSatisfaction(vector<int>& satisfaction) {
+        sort(satisfaction.begin(),satisfaction.end());
+      //  int n=satisfaction.size();
+      //  vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
+       // int ans=solveRec(satisfaction,1,0);
+      // int ans=solveMem(satisfaction,1,0,dp);
+      //int ans=solveTab(satisfaction);
+      int ans=solveSpaceOpt(satisfaction);
+        return ans;
+        
+    }
+};
