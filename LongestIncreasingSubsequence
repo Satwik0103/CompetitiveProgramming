@@ -1,0 +1,81 @@
+
+class Solution
+{
+    public:
+    //Function to find length of longest increasing subsequence.
+    int solveRec(int n ,int a[],int index,int prev){
+        if(index==n){
+            return 0;
+        }
+        int include=0;
+        if(prev==-1 || a[index]>a[prev]){
+        include=1+solveRec(n,a,index+1,index);
+        }
+        int exclude=solveRec(n,a,index+1,prev);
+        int ans=max(include,exclude);
+        return ans;
+        
+    }
+    int solveMem(int n ,int a[],int index,int prev, vector<vector<int>>& dp){
+        if(index==n){
+            return 0;
+        }
+        if(dp[index][prev+1]!=-1){
+            return dp[index][prev+1];
+        }
+        int include=0;
+        if(prev==-1 || a[index]>a[prev]){
+        include=1+solveMem(n,a,index+1,index,dp);
+        }
+        int exclude=solveMem(n,a,index+1,prev,dp);
+        int ans=max(include,exclude);
+        dp[index][prev+1]=ans;
+        return ans;
+        
+    }
+     int solveTab(int n ,int a[]){
+        vector<vector<int>>dp(n+1,vector<int>(n+1,0));
+        for(int index=n-1;index>=0;index--){
+        for(int prev=index-1;prev>=-1;prev--){
+        int include=0;
+        if(prev==-1 || a[index]>a[prev]){
+        include=1+dp[index+1][index+1];
+        }
+        int exclude=dp[index+1][prev+1];
+        int ans=max(include,exclude);
+        dp[index][prev+1]=ans;
+        }
+        }
+        return dp[0][0];
+        
+    }
+    int solveSpaceOpt(int n ,int a[]){
+        vector<int>curr(n+1,0);
+        vector<int>next(n+1,0);
+        //vector<vector<int>>dp(n+1,vector<int>(n+1,0));
+        for(int index=n-1;index>=0;index--){
+        for(int prev=index-1;prev>=-1;prev--){
+        int include=0;
+        if(prev==-1 || a[index]>a[prev]){
+        include=1+next[index+1];
+        }
+        int exclude=next[prev+1];
+        int ans=max(include,exclude);
+        curr[prev+1]=ans;
+        }
+        next=curr;
+        }
+        return next[0];
+        
+    }
+    int longestSubsequence(int n, int a[])
+    {
+       // your code here
+      // int ans=solveRec(n,a,0,-1);
+    //   vector<vector<int>>dp(n,vector<int>(n+1,-1));
+    //   int ans=solveMem(n,a,0,-1,dp);
+    //int ans=solveTab(n,a);
+        int ans=solveSpaceOpt(n,a);
+       return ans;
+    }
+};
