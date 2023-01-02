@@ -1,0 +1,39 @@
+class Solution {
+public:
+bool check(vector<int>baseBox,vector<int>newBox){
+    if(newBox[0]<=baseBox[0]&& newBox[1]<=baseBox[1]&&newBox[2]<=baseBox[2])
+    return true;
+    else
+    return false;
+}
+int solveOptimal(int n,vector<vector<int>>& a){
+      vector<int>curr(n+1,0);
+        vector<int>next(n+1,0);
+        //vector<vector<int>>dp(n+1,vector<int>(n+1,0));
+        for(int index=n-1;index>=0;index--){
+        for(int prev=index-1;prev>=-1;prev--){
+        int include=0;
+        if(prev==-1 || check(a[index],a[prev])){
+        include=a[index][2]+next[index+1];
+        }
+        int exclude=next[prev+1];
+        int ans=max(include,exclude);
+        curr[prev+1]=ans;
+        }
+        next=curr;
+        }
+        return next[0];
+}
+    int maxHeight(vector<vector<int>>& cuboids) {
+
+        //Sorting dimensions of cuboid so that at 2 nd index we get maximum height
+        for(auto&i:cuboids){
+            sort(i.begin(),i.end());
+        }
+        //Sorting cuboids on basis of length and breadth
+        sort(cuboids.begin(),cuboids.end());
+        //Applying Longest Incresing Subsequence
+        int ans=solveOptimal(cuboids.size(),cuboids);
+        return ans;
+    }
+};
