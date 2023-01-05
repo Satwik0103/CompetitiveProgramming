@@ -1,0 +1,84 @@
+class Solution {
+public:
+    bool solveRec(int index,int n,vector<int>& nums,int target){
+        if(index>=n)
+        return false;
+        if(target<0)
+        return false;
+        if(target==0)
+        return true;
+        bool include=solveRec(index+1,n,nums,target-nums[index]);
+        bool exclude=solveRec(index+1,n,nums,target);
+        bool ans=include or exclude;
+        return ans;
+
+    }
+    bool solveMem(int index,int n,vector<int>& nums,int target,vector<vector<int>>& dp){
+        if(index>=n)
+        return false;
+        if(target<0)
+        return false;
+        if(target==0)
+        return true;
+        if(dp[index][target]!=-1)
+        return dp[index][target];
+        bool include=solveMem(index+1,n,nums,target-nums[index],dp);
+        bool exclude=solveMem(index+1,n,nums,target,dp);
+        bool ans=include or exclude;
+
+        return dp[index][target]=ans;
+
+    }
+    bool solveTab(int n,vector<int>& nums,int target){
+         vector<vector<int>>dp(n+1,vector<int>(target+1,false));
+         for(int i=0;i<=n;i++){
+             dp[i][0]=true;
+         }
+         for(int index=n-1;index>=0;index--){
+             for(int t=1;t<=target;t++){
+                 bool incl=false;
+                 if(t-nums[index]>=0)  
+                 incl=dp[index+1][t-nums[index]];
+                bool excl=dp[index+1][t];
+                dp[index][t]=incl or excl;
+             }
+         }
+         return dp[0][target];
+
+    }
+    bool solveSpaceOpt(int n,vector<int>& nums,int target){
+         vector<int>curr(target+1,false);
+         vector<int>next(target+1,false);
+         for(int i=0;i<=n;i++){
+             next[0]=true;
+         }
+         for(int index=n-1;index>=0;index--){
+             for(int t=1;t<=target;t++){
+                 bool incl=false;
+                 if(t-nums[index]>=0)  
+                 incl=next[t-nums[index]];
+                bool excl=next[t];
+                curr[t]=incl or excl;
+             }
+             curr=next;
+         }
+         return next[target];
+
+    }
+    bool canPartition(vector<int>& nums) {
+        int n=nums.size();
+        int target=0;
+        for(int i=0;i<nums.size();i++){
+            target+=nums[i];
+        }
+        if(target%2!=0)
+        return false;
+        else{
+        //return solveRec(0,n,nums,target/2);
+        // vector<vector<int>>dp(n+1,vector<int>(target+1,-1));
+        // return solveMem(0,n,nums,target/2,dp);
+        return solveTab(n,nums,target/2);
+        return solveSpaceOpt(n,nums,target/2);
+        }
+    }
+};
