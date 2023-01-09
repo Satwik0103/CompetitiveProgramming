@@ -1,0 +1,49 @@
+class Solution {
+public:
+// int find(int val,vector<int>&arr){
+//     for(int i=0;i<arr.size();i++){
+//         if(val==arr[i])
+//         return i;
+//     }
+//     return -1;
+// }
+//     int solveRec(vector<int>& arr, int d,int index){
+//         vector<int>b;
+//         for (int i=0; i<arr.size(); i++) 
+//         b.push_back(arr[i]); 
+//         int n=arr.size();
+//         if(index == n-1)
+//         return 0;
+//         int temp=arr[index]+d;
+//         int res=find(temp,b);
+//         int inc=0,exc=0;
+//         if(res!=-1)
+//         inc=1+solveRec(arr,d,res);
+//         if(index+1<arr.size())
+//         exc=solveRec(arr,d,index+1);
+//         int ans=max(inc,exc);
+//         return ans;
+
+//     }
+    int longestSubsequence(vector<int>& arr, int difference) {
+       // int n=arr.size();
+        // if(n<=1)
+        // return n;
+        // int ans=solveBruteForce(arr,difference,0);
+        // return ans;
+        int ans=0;
+        unordered_map<int,int>dp;
+        for(int i=0;i<arr.size();i++){
+            //Checking back of dp from each index
+            int temp=arr[i]-difference;
+            int tempAns=0;
+            //check if ans already exists or not in dp
+            if(dp.count(temp))
+            tempAns=dp[temp];
+            //calculating this ans
+            dp[arr[i]]=1+tempAns;
+            ans=max(ans,dp[arr[i]]);
+        }
+        return ans;
+    }
+};
