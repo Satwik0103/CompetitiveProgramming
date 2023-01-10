@@ -1,0 +1,59 @@
+class Solution {
+public:
+// int solveRec(int n){
+//     if(n<=1)
+//     return 1;
+//     int ans=0;
+//     for(int i=1;i<=n;i++){
+//         ans=ans+solveRec(i-1)*solveRec(n-i);
+//     }
+//     return ans;
+// }
+int solveMem(int n,vector<int>& dp){
+    if(n<=1)
+    return 1;
+    if(dp[n]!=-1)
+    return dp[n];
+    int ans=0;
+    //Traversing through each root node
+    for(int i=1;i<=n;i++){
+        ans=ans+solveMem(i-1,dp)*solveMem(n-i,dp);
+    }
+    dp[n]=ans;
+    return ans;
+}
+int solveTab(int n){
+    vector<int>dp(n+1,0);
+    dp[0]=1;
+    dp[1]=1;
+
+   //Node
+    for(int j=2;j<=n;j++){
+         //Traversing through each root node
+    for(int i=1;i<=j;i++){
+        dp[j]=dp[j]+dp[i-1]*dp[j-i];
+    }
+    }
+    return dp[n];
+}
+  long long int fact(int n){
+        if(n == 0 || n == 1)
+            return 1;
+
+        else
+            return n * fact(n-1); /// It is giving a runtime error as :--> runtime error: signed integer overflow: 21 *                                         2432902008176640000 cannot be represented in type 'long long'
+    }
+int catalanNo(int n){
+    
+        return (fact(2*n)/ ( fact(n+1) * fact(n) ) );
+}
+    int numTrees(int n) {
+        //int ans=solveRec(n);
+       // vector<int>dp(n+1,-1);
+        //int ans=solveMem(n,dp);
+        int ans=solveTab(n);
+       // int ans=catalanNo(n);
+        return ans;
+        
+    }
+};
