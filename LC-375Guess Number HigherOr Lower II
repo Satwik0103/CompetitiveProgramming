@@ -1,0 +1,55 @@
+class Solution {
+public:
+int solveRec(int start,int end){
+    if(start>=end)
+    return 0;
+   int res=INT_MAX;
+    for(int i=start;i<end;i++){
+         int ans=0;
+        ans=ans+i+max(solveRec(start,i-1),solveRec(i+1,end));
+        res=min(res,ans);
+    }
+    return res;
+}
+int solveMem(int start,int end,vector<vector<int>>&dp){
+    if(start>=end)
+    return 0;
+    if(dp[start][end]!=-1)
+    return dp[start][end];
+   int res=INT_MAX;
+    for(int i=start;i<end;i++){
+         int ans=0;
+        ans=ans+i+max(solveMem(start,i-1,dp),solveMem(i+1,end,dp));
+        res=min(res,ans);
+    }
+    dp[start][end]=res;
+    return res;
+}
+int solveTab(int n){
+    vector<vector<int>>dp(n+1,vector<int>(n+1,0));
+   
+   for(int start=n;start>=1;start--){
+       for(int end=start;end<=n;end++)
+       if(start== end){
+           continue;
+       }
+       else{
+              int res=INT_MAX;
+        for(int i=start;i<end;i++){
+      
+        res=min(res,i+max(dp[start][i-1],dp[i+1][end]));
+    }
+    dp[start][end]=res;
+       }
+
+   }
+   return dp[1][n];
+}
+    int getMoneyAmount(int n) {
+        //int ans=solveRec(1,n);
+       // vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
+        //int ans = solveMem(1,n,dp);
+        int ans =solveTab(n);
+        return ans;
+    }
+};
