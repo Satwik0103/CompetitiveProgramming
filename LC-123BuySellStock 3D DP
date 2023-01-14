@@ -1,0 +1,108 @@
+class Solution {
+public:
+//3D DP
+//Just add limit parameter
+ int solveRec(vector<int>& prices,int index,int buyFlag,int limit){
+        if(index>prices.size()-1)
+        return 0;
+        if(limit==0)
+        return 0;
+
+        if(buyFlag==0){
+            //If buy
+            int a=-prices[index]+solveRec(prices,index+1,1,limit);
+            //If not buy
+            int b=0+solveRec(prices,index+1,0,limit);
+            return max(a,b);
+        }
+        else{
+            //As limit will change if we buy and sell a stock only
+            int a=prices[index]+solveRec(prices,index+1,0,limit-1);
+            //If not sell
+            int b=0+solveRec(prices,index+1,1,limit);
+            return max(a,b);
+        }
+    }
+    int solveMem(vector<int>& prices,int index,int buyFlag,int limit,vector<vector<vector<int>>>&dp){
+        if(index>prices.size()-1)
+        return 0;
+        if(limit==0)
+        return 0;
+        if(dp[index][buyFlag][limit]!=-1)
+        return dp[index][buyFlag][limit];
+        if(buyFlag==0){
+            //If buy
+            int a=-prices[index]+solveMem(prices,index+1,1,limit,dp);
+            //If not buy
+            int b=0+solveMem(prices,index+1,0,limit,dp);
+            return dp[index][buyFlag][limit]=max(a,b);
+        }
+        else{
+            //As limit will change if we buy and sell a stock only
+            int a=prices[index]+solveMem(prices,index+1,0,limit-1,dp);
+            //If not sell
+            int b=0+solveMem(prices,index+1,1,limit,dp);
+            return dp[index][buyFlag][limit]=max(a,b);
+        }
+    }
+    int solveTab(vector<int>& prices){
+         int n=prices.size();
+        vector<vector<vector<int>>>dp(n+1,vector<vector<int>>(2,vector<int>(3,0)));
+        for(int index=n-1;index>=0;index--){
+            for(int buyFlag=0;buyFlag<=1;buyFlag++){
+                for(int limit=1;limit<=2;limit++){
+                  if(buyFlag==0){
+            //If buy
+            int a=-prices[index]+dp[index+1][1][limit];
+            //If not buy
+            int b=0+dp[index+1][0][limit];
+             dp[index][buyFlag][limit]=max(a,b);
+        }
+        else{
+            //If sell
+            int a=prices[index]+dp[index+1][0][limit-1];
+            //If not sell
+            int b=0+dp[index+1][1][limit];
+             dp[index][buyFlag][limit]=max(a,b);
+        }
+                }
+            }
+        }
+      return dp[0][0][2];
+    }
+     int solveSpaceOpt(vector<int>& prices){
+         int n=prices.size();
+        vector<vector<vector<int>>>dp(n+1,vector<vector<int>>(2,vector<int>(3,0)));
+         vector<vector<int>>curr(2,vector<int>(3,0));
+         vector<vector<int>>next(2,vector<int>(3,0));
+        for(int index=n-1;index>=0;index--){
+            for(int buyFlag=0;buyFlag<=1;buyFlag++){
+                for(int limit=1;limit<=2;limit++){
+                  if(buyFlag==0){
+            //If buy
+            int a=-prices[index]+next[1][limit];
+            //If not buy
+            int b=0+next[0][limit];
+             curr[buyFlag][limit]=max(a,b);
+        }
+        else{
+            //If sell
+            int a=prices[index]+next[0][limit-1];
+            //If not sell
+            int b=0+next[1][limit];
+             curr[buyFlag][limit]=max(a,b);
+        }
+                }
+            }
+            next=curr;
+        }
+      return next[0][2];
+    }
+    int maxProfit(vector<int>& prices) {
+        //int ans=solveRec(prices,0,0,2);
+      //vector<vector<vector<int>>>dp(n,vector<vector<int>>(2,vector<int>(3,-1)));
+        int ans=solveSpaceOpt(prices);
+        return ans;
+        
+    }
+};
