@@ -1,0 +1,34 @@
+class Solution {
+public:
+ int solveSpaceOpt(vector<int>& prices ,int k){
+         int n=prices.size();
+       // vector<vector<vector<int>>>dp(n+1,vector<vector<int>>(2,vector<int>(k+1,0)));
+         vector<vector<int>>curr(2,vector<int>(k+1,0));
+         vector<vector<int>>next(2,vector<int>(k+1,0));
+        for(int index=n-1;index>=0;index--){
+            for(int buyFlag=0;buyFlag<=1;buyFlag++){
+                for(int limit=1;limit<=k;limit++){
+                  if(buyFlag==0){
+            //If buy
+            int a=-prices[index]+next[1][limit];
+            //If not buy
+            int b=0+next[0][limit];
+             curr[buyFlag][limit]=max(a,b);
+        }
+        else{
+            //If sell
+            int a=prices[index]+next[0][limit-1];
+            //If not sell
+            int b=0+next[1][limit];
+             curr[buyFlag][limit]=max(a,b);
+        }
+                }
+            }
+            next=curr;
+        }
+      return next[0][k];
+    }
+    int maxProfit(int k, vector<int>& prices) {
+        return solveSpaceOpt(prices,k);
+    }
+};
