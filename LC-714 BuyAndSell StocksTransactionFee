@@ -1,0 +1,78 @@
+class Solution {
+public:
+int solveRec(vector<int>& prices,int index,int buyFlag,int fee){
+        if(index>prices.size()-1)
+        return 0;
+        if(buyFlag==0){
+            //If buy
+            int a=-prices[index]+solveRec(prices,index+1,1,fee);
+            //If not buy
+            int b=0+solveRec(prices,index+1,0,fee);
+            return max(a,b);
+        }
+        else{
+            //If sell
+            int a=prices[index]-fee+solveRec(prices,index+1,0,fee);
+            //If not sell
+            int b=0+solveRec(prices,index+1,1,fee);
+            return max(a,b);
+        }
+    }
+    
+      int solveMem(vector<int>& prices,int index,int buyFlag,vector<vector<int>>&dp,int fee){
+        if(index>prices.size()-1)
+        return 0;
+        if(dp[index][buyFlag]!=-1)
+        return dp[index][buyFlag];
+        if(buyFlag==0){
+            //If buy
+            int a=-prices[index]+solveMem(prices,index+1,1,dp,fee);
+            //If not buy
+            int b=0+solveMem(prices,index+1,0,dp,fee);
+            return dp[index][buyFlag]=max(a,b);
+        }
+        else{
+            //If sell
+            int a=prices[index]-fee+solveMem(prices,index+1,0,dp,fee);
+            //If not sell
+            int b=0+solveMem(prices,index+1,1,dp,fee);
+            return dp[index][buyFlag]=max(a,b);
+        }
+    }
+     int solveSpaceOpt(vector<int>& prices,int fee){
+         int n=prices.size();
+         vector<int>curr(2,0);
+         vector<int>next(2,0);
+      //  vector<vector<int>> dp(n+1,vector<int>(2,0));
+        for(int index=n-1;index>=0;index--){
+            for(int buyFlag=0;buyFlag<=1;buyFlag++){
+                  if(buyFlag==0){
+            //If buy
+            int a=-prices[index]+next[1];
+            //If not buy
+            int b=0+next[0];
+             curr[buyFlag]=max(a,b);
+        }
+        else{
+            //If sell
+            int a=prices[index]-fee+next[0];
+            //If not sell
+            int b=0+next[1];
+             curr[buyFlag]=max(a,b);
+        }
+
+            }
+            next=curr;
+        }
+      return next[0];
+    }
+
+    int maxProfit(vector<int>& prices, int fee) {
+            // int ans=solveRec(prices,0,0,fee);
+          //  int n=prices.size();
+            // vector<vector<int>> dp(n+1,vector<int>(2,-1));
+        // int ans=solveMem(prices,0,0,dp,fee);
+        int ans=solveSpaceOpt(prices,fee);
+             return ans;
+    }
+};
