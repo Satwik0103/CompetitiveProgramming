@@ -1,0 +1,124 @@
+class Solution {
+public:
+  int solveSpaceOP(string& a, string& b){
+
+        int n1 = a.length();
+        int n2 = b.length();
+
+       // vector<vector<int>> dp(n1+1, vector<int> (n2+1, 0));
+
+        vector<int> currRow(n2+1, 0);
+        vector<int> nextRow(n2+1, 0);
+
+        for(int i = n1-1; i>=0; i--){
+            for(int j = n2-1; j>=0; j--){
+                int ans = 0;
+
+                if(a[i] == b[j])
+                    ans = 1 + nextRow[j+1];
+
+                else
+                {
+                    ans = max(nextRow[j], currRow[j+1]);
+                }
+
+                currRow[j] = ans;
+            }
+
+            nextRow = currRow;
+        }
+        
+        return nextRow[0];
+    }
+    
+int solveTab(string text1,string text2){
+     int n1 = text1.length();
+        int n2 = text2.length();
+    vector<vector<int>>dp(n1+1,vector<int>(n2+1,0));
+    for(int i=n1-1;i>=0;i--){
+        for(int j=n2-1;j>=0;j--){
+             int ans=0;
+            if(text1[i]==text2[j])
+            ans= 1+dp[i+1][j+1];
+            else
+            ans= max(dp[i+1][j],dp[i][j+1]);
+            dp[i][j]=ans;
+        }
+    }
+    return dp[0][0];
+}
+int findElement(string grt,char element,int pos){
+    for(int i=pos;i<grt.size();i++){
+      //  cout<<element<<"dvgdhv"<<grt[i]<<endl;
+        if(element==grt[i])
+        return i+1;
+    }
+    return -2;
+
+}
+int solve(string grt,string smaller,int index,int pos){
+    if(index==smaller.size())
+    return 0;
+    int inc=0;
+   char element=smaller[index];
+ //  cout<<"dhd"<<element<<endl;
+   // if(grt.find(element)!= string::npos ){
+       int res=findElement(grt,element,pos);
+       cout<<res<<endl;
+
+        if( res!=-1){
+      //   cout<<element<<endl;
+      //  cout<<"Here"<<endl;
+    inc=1+solve(grt,smaller,index+1,res);
+    }
+    int exc=solve(grt,smaller,index+1,pos);
+    int ans=max(inc,exc);
+    return ans;
+}
+int solveRec(string text1, string text2,int i,int j){
+    if(i==text1.length())
+    return 0;
+    if(j==text2.length())
+    return 0;
+    int ans=0;
+    if(text1[i]==text2[j])
+     ans= 1+solveRec(text1,text2,i+1,j+1);
+    else
+     ans= max(solveRec(text1,text2,i+1,j),solveRec(text1,text2,i,j+1));
+     return ans;
+}
+int solveMem(string text1, string text2,int i,int j,vector<vector<int>>&dp){
+    if(i==text1.length())
+    return 0;
+    if(j==text2.length())
+    return 0;
+    if(dp[i][j]!=-1)
+    return dp[i][j];
+    int ans=0;
+    if(text1[i]==text2[j])
+     ans= 1+solveMem(text1,text2,i+1,j+1,dp);
+    else
+     ans= max(solveMem(text1,text2,i+1,j,dp),solveMem(text1,text2,i,j+1,dp));
+     return dp[i][j]=ans;
+}
+    int longestCommonSubsequence(string text1, string text2) {
+        // RECURSION
+        // return solve(text1, text2, 0, 0);
+
+        // RECURSION + MEMOIZATION
+        
+        // int n1 = text1.length();
+        // int n2 = text2.length();
+        
+        // vector<vector<int>> dp(n1+1, vector<int> (n2+1, -1));
+
+        // return solveMem(text1, text2, 0, 0, dp);
+        
+
+        // TABULATION
+        // return solveTab(text1, text2);
+
+        // SPACE OPTIMIZATION
+        return solveSpaceOP(text1, text2);
+    }
+};
