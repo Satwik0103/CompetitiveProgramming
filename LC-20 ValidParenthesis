@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<char>ele;
+        for(int i=0;i<s.length();i++){
+              if (ele.empty()) {
+              ele.push(s[i]);
+        }
+          
+            
+            else if(s[i]==')'&& ele.top()=='('){
+            ele.pop();
+            }
+            else if(s[i]=='}'&&ele.top()=='{'){
+            ele.pop();
+            }
+             else if(s[i]==']'&&ele.top()=='['){
+            ele.pop();
+             }
+               else 
+            ele.push(s[i]);
+        }
+        if (ele.empty()) {
+        return true;
+    }
+        return false;
+        
+    }
+};
