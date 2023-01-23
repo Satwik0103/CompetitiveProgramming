@@ -1,0 +1,40 @@
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        // int n=x;
+        // if(x<0)
+        // return false;
+        // int reverse = 0; //to store the reverse of the given number
+        // int remainder = 0;
+        // while(x!=0){
+        // remainder = x % 10;
+        // if()
+        // reverse = reverse * 10 + remainder;
+        // x /= 10;
+        // }
+        //  if (reverse == n)
+        // return true;
+        // else
+        // return false;
+
+         stack<int> st;
+        if(x<0)
+            return false;
+        int y=x;
+        while(x)
+        {
+            st.push(x%10);
+            x/=10;
+        }
+        while(y)
+        {
+            if(st.top()!=(y%10))
+               return false;
+             st.pop();
+               y/=10;
+        }
+        return true;
+    }
+    
+        
+};
