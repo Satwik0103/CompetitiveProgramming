@@ -1,0 +1,12 @@
+//Sols---Working
+    // vector<int>ans(nums.size());
+    // for(int i=0;i<nums.size();i++){
+    //     ans[(i+k)%nums.size()]=nums[i];
+    // }
+    // nums=ans;
+    int a =k%nums.size();
+        reverse(nums.begin(),nums.end());
+        reverse(nums.begin(),nums.begin()+a);
+        reverse(nums.begin()+a,nums.end());
+            
+    }
