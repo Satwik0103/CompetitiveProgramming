@@ -1,0 +1,18 @@
+class Solution {
+public:
+        //   1-2-3-4-5  If sorted 1<2,2<3,3<4,4<5,5>1 only one pair will exist in sorted array for more understanding watch video LC-21
+        //If all element same count will be less than 1 
+    bool check(vector<int>& nums) {
+        int count=0;
+        for(int i=1;i<nums.size();i++){
+            if(nums[i-1]>nums[i])
+            count++;
+        }
+        if(nums[nums.size()-1]>nums[0])
+        count++;
+        if(count<=1)
+        return true;
+        else
+        return false;
+    }
+};
