@@ -1,0 +1,93 @@
+// class Solution {
+// public:
+// int solveRec(vector<int>& height,int start,int end){
+//     if(start==height.size())
+//     return 0;
+//      if(end==height.size())
+//     return 0;
+//     int area=0;
+//     // while(k<height.size()){
+      
+//     //     int newBound=(min(height[start],height[k])*(k-start));
+//     //     area=max(area,newBound);
+//     //       area=max(area,solveRec(height,start,k++));
+//     // }
+//     // area=max(area,solveRec(height,start+1));
+
+//     int newBound=(min(height[start],height[end])*(end-start));
+//     area=max(area,newBound);
+//     area=max(area,max(solveRec(height,start,end+1),solveRec(height,start+1,end)));
+//     return area;
+
+// }
+// // int solveMem(vector<int>& height,int start,int end,vector<vector<int>>&dp){
+// //     if(start==height.size())
+// //     return 0;
+// //      if(end<=start)
+// //     return 0;
+// //     if(dp[start][end]!=-1)
+// //     return dp[start][end];
+// //     int area=0;
+// //     // while(k<height.size()){
+      
+// //     //     int newBound=(min(height[start],height[k])*(k-start));
+// //     //     area=max(area,newBound);
+// //     //       area=max(area,solveRec(height,start,k++));
+// //     // }
+// //     // area=max(area,solveRec(height,start+1));
+
+// //     int newBound=(min(height[start],height[end])*(end-start));
+// //     area=max(area,newBound);
+// //     area=max(area,max(solveMem(height,start,end-1,dp),solveMem(height,start+1,end,dp)));
+// //     return dp[start][end]=area;
+
+// // }
+// int solveMem(vector<int>& height,int start,vector<int>& dp){
+//     if(start==height.size()-1)
+//     return 0;
+
+//     if(dp[start]!=-1)
+//     return dp[start];
+
+//     int area=0;
+//     for(int k=start+1;k<height.size();k++){
+//         int newBound=(min(height[start],height[k])*(k-start));
+//         area=max(area,newBound);
+//     }
+//     area=max(area,solveMem(height,start+1,dp));
+//     return dp[start]=area;
+
+// }
+//     int maxArea(vector<int>& height) {
+//         int n=height.size();
+//        //int ans=solveRec(height,0,1);
+//        //vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
+//        // int ans=solveMem(height,0,height.size()-1,dp);
+//         vector<int>dp(n+1,-1);
+//        int ans=solveMem(height,0,dp);
+//         return ans;
+        
+//     }
+
+
+
+
+// };
+
+
+
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int left = 0, right = height.size() - 1;
+        int maxArea = 0;
+        while (left < right) {
+            maxArea = max(maxArea, min(height[left], height[right]) * (right - left));
+            if (height[left] < height[right])
+                left++;
+            else
+                right--;
+        }
+        return maxArea;
+    }
+};
