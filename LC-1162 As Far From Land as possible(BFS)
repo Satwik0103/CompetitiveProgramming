@@ -1,0 +1,73 @@
+// class Solution {
+// public:
+//     int maxDistance(vector<vector<int>>& grid) {
+//         int row = grid.size();
+//         int col = grid[0].size();
+//         int ans = -1;
+//         queue<pair<int, int>> q;
+//         for (int i = 0; i < row; i++) {
+//             for (int j = 0; j < col; j++) {
+//                     q.push({ i, j });
+//             }
+//         }
+//         while (!q.empty()) {
+//             pair<int, int> p1 = q.front();
+//             q.pop();
+//             int i = p1.first;
+//             int j = p1.second;
+//             if (grid[i][j] == 0) {
+//                 int val = INT_MAX;
+//                 for (int k = 0; k < row; k++) {
+//                     for (int l = 0; l < col; l++) {
+//                         if (grid[k][l] == 1) {
+//                             int d = abs(i - k) + abs(j - l);
+//                             val = min(val, d);
+//                         }
+//                     }
+//                 }
+//                 ans = max(ans, val);
+//             }
+//         }
+//         return ans == INT_MAX ? -1 : ans;
+//     }
+// };
+class Solution {
+public:
+    int maxDistance(vector<vector<int>>& grid) {
+        int row=grid.size();
+        int col=grid[0].size();
+        int ans=-1;
+        queue<pair<int,int>> q;
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(grid[i][j]==1){
+                    q.push({ i, j });
+                }
+            }
+        }
+        if(q.empty() || q.size()==row*col){
+            return -1;
+        }
+        int dirs[4][2]={{1,0},{-1,0},{0,1},{0,-1}};
+        while(!q.empty()){
+            int s=q.size();
+            ans++;
+            while(s--){
+                auto t=q.front();
+                q.pop();
+                int x=t.first,y=t.second;
+                for(int i=0;i<4;i++){
+                    int a=x+dirs[i][0];
+                    int b=y+dirs[i][1];
+                    if(a>=0 && a<row && b>=0 && b<col && grid[a][b]==0){
+                        grid[a][b]=1;
+                        q.push({a,b});
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+};
+
+
