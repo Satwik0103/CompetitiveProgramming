@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int shipWithinDays(vector<int>& weights, int days) {
+        int n=weights.size();
+        int start=0;
+        int end=0;
+        int mid;
+        for(int i=0;i<n;i++){
+            start=max(start,weights[i]);
+            end+=weights[i];
+        }
+        int ans=end;
+        while(start<end){
+        mid=(start+end)/2;
+        cout<<mid;
+        if(boolCheck(weights,mid,days)){
+            ans=mid;
+            end=mid;
+        }
+        else{
+            start=mid+1;
+        }
+        }
+        return ans;
+    }
+    bool boolCheck(vector<int>&weights,int capacity,int totalDays){
+        int days=1;
+        int maxCapacity=0;
+        for(int i=0;i<weights.size();i++){
+            if(maxCapacity+weights[i]<=capacity){
+            maxCapacity+=weights[i];
+            }
+            else{
+            days++;
+            maxCapacity=weights[i];
+            }
+        }
+        if(days>totalDays)
+        return false;
+        else
+        return true;
+    }
+};
