@@ -1,0 +1,29 @@
+class Solution {
+public:
+    void traversePTree(TreeNode* p, vector<int>& v) {
+        if (p == nullptr) {
+            v.push_back(-1); // mark null nodes as -1
+            return;
+        }
+        v.push_back(p->val);
+        traversePTree(p->left, v);
+        traversePTree(p->right, v);
+    }
+    
+    void traverseQTree(TreeNode* q, vector<int>& v) {
+        if (q == nullptr) {
+            v.push_back(-1);
+            return;
+        }
+        v.push_back(q->val);
+        traverseQTree(q->left, v);
+        traverseQTree(q->right, v);
+    }
+    
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        vector<int> v1, v2;
+        traversePTree(p, v1);
+        traverseQTree(q, v2);
+        return v1 == v2;
+    }
+};
