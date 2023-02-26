@@ -1,0 +1,72 @@
+Find the Divisibility Array of a String
+You are given a 0-indexed string word of length n consisting of digits, and a positive integer m.
+
+The divisibility array div of word is an integer array of length n such that:
+
+div[i] = 1 if the numeric value of word[0,...,i] is divisible by m, or
+div[i] = 0 otherwise.
+Return the divisibility array of word.
+
+
+
+Sol=
+class Solution {
+public:
+    vector<int> divisibilityArray(string word, int m) {
+        vector<int> ans(word.length(), 0);
+        if((word[0]-'0') % m == 0)
+            ans[0] = 1;
+        long long num = word[0]-'0';
+        for(int k = 1; k < word.length(); k++){
+            num = (num * 10 + (word[k]-'0')) % m;
+            if(num == 0)
+                ans[k] = 1;
+        }
+        return ans;        
+    }
+};
+
+Left and rightSum difference
+Given a 0-indexed integer array nums, find a 0-indexed integer array answer where:
+
+answer.length == nums.length.
+answer[i] = |leftSum[i] - rightSum[i]|.
+Where:
+
+leftSum[i] is the sum of elements to the left of the index i in the array nums. If there is no such element, leftSum[i] = 0.
+rightSum[i] is the sum of elements to the right of the index i in the array nums. If there is no such element, rightSum[i] = 0.
+Return the array answer.
+
+sol=
+class Solution {
+public:
+    vector<int> leftRigthDifference(vector<int>& nums) {
+       
+        int n=nums.size();
+         vector<int>left(n);
+        vector<int>right(n);
+        vector<int>finalAns(n);
+        int totalSum=0;
+            for(int i=0;i<n;i++){
+                 totalSum+=nums[i];
+            }
+        int rightSum=totalSum-nums[0];
+        int leftSum=totalSum-nums[n-1];
+        for(int i=1;i<n;i++){
+            right[i-1]=rightSum;
+            rightSum=rightSum-nums[i];
+        }
+        right[n-1]=0;
+        for(int k=n-2;k>=0;k--){
+            left[k+1]=leftSum;
+            leftSum=leftSum-nums[k];
+        }
+        left[0]=0;
+        
+        for(int k=0;k<n;k++){
+            finalAns[k]=abs(left[k]-right[k]);
+        }
+        return finalAns;
+        
+    }
+};
