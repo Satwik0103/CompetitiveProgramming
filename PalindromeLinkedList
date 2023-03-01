@@ -1,0 +1,49 @@
+he first challenge then becomes finding the middle of the linked list in order to start our reversing process there. For that, we can look to Floyd's Cycle Detection Algorithm.
+
+With Floyd's, we'll travel through the linked list with two pointers, one of which is moving twice as fast as the other. When the fast pointer reaches the end of the list, the slow pointer must then be in the middle.
+Diagram 1Withslow now at the middle, we can reverse the back half of the list with the help of another variable to contain a reference to the previous node (prev) and a three-way swap. Before we do this, however, we'll want to set prev.next = null, so that we break the reverse cycle and avoid an endless loop.
+Diagram 2Once the back half is properly reversed andslow is once again at the end of the list, we can now start fast back over again at the head and compare the two halves simultaneously, with no extra space required.
+Diagram 3If the two pointers ever disagree in value, we canreturn false, otherwise we can return true if both pointers reach the middle successfully.
+
+(Note: This process works regardless of whether the length of the linked list is odd or even, as the comparison will stop when slow reaches the "dead-end" node.)
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    // bool isPalindrome(ListNode* head) {
+    //     vector<int>ans;
+    //     while(head!=NULL){
+    //         ans.push_back(head->val);
+    //         head=head->next;
+    //     }
+    //     vector<int>revans=ans;
+    //     reverse(ans.begin(),ans.end());
+    //     if(ans==revans)
+    //     return true;
+    //     else
+    //     return false;
+        
+    // }
+    bool isPalindrome(ListNode* head) {
+        ListNode *slow = head, *fast = head, *prev, *temp;
+        while (fast && fast->next)
+            slow = slow->next, fast = fast->next->next;
+        prev = slow, slow = slow->next, prev->next = NULL;
+        while (slow)
+            temp = slow->next, slow->next = prev, prev = slow, slow = temp;
+        fast = head, slow = prev;
+        while (slow)
+            if (fast->val != slow->val) return false;
+            else fast = fast->next, slow = slow->next;
+        return true;
+    }
+};
