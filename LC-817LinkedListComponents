@@ -1,0 +1,77 @@
+// /**
+//  * Definition for singly-linked list.
+//  * struct ListNode {
+//  *     int val;
+//  *     ListNode *next;
+//  *     ListNode() : val(0), next(nullptr) {}
+//  *     ListNode(int x) : val(x), next(nullptr) {}
+//  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+//  * };
+//  */class Solution {
+// public:
+//     int numComponents(ListNode* head, vector<int>& nums) {
+//        map<int,vector<int>>mp;
+//        ListNode* temp=head;
+//        ListNode*prev=NULL;
+//        ListNode*next=NULL;
+//         int cnt=0;
+//         int alone=0;
+//        while(temp!=NULL){
+//             vector<int>data{-1,-1};
+//            if (prev != NULL) {
+//                data[0]=prev->val;
+//            }
+//            if (temp->next != NULL) {
+//                data[1]=temp->next->val;
+//            }
+//            mp[temp->val]=data;
+//            prev=temp;
+//            temp=temp->next;
+//        }
+     
+//        for (auto i : mp){
+//         cout << i.first << "   " << i.second[0]<<i.second[1]<< endl;
+//         auto res = find (nums.begin(), nums.end(), i.first);
+//         if (res != nums.end())
+//         {
+//           auto res1 = find (nums.begin(), nums.end(), i.second[0]);
+//            if (res1 != nums.end())
+//             {
+//             cnt++;
+//             }
+//            auto res2 = find (nums.begin(), nums.end(), i.second[1]);
+//               if (res2 != nums.end())
+//               {
+//               cnt++;
+//               }
+//               if(res1==nums.end()&& res2==nums.end()){
+//                   alone++;
+//               }
+//         }
+//        }
+
+ 
+//         return cnt/2+alone;
+//     }
+// };
+class Solution {
+public:
+    int numComponents(ListNode* head, vector<int>& nums) {
+        unordered_set<int> values(nums.begin(), nums.end());
+        int count = 0;
+        bool inComponent = false;
+        while (head != nullptr) {
+            if (values.count(head->val)) {
+                if (!inComponent) {
+                    inComponent = true;
+                    count++;
+                }
+            } else {
+                inComponent = false;
+            }
+            head = head->next;
+        }
+        return count;
+    }
+};
+
