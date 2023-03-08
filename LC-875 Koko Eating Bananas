@@ -1,0 +1,101 @@
+class Solution {
+public:
+    int minEatingSpeed(vector<int>& piles, int h) {
+        if (piles.size() == 1) {
+        int ans = piles[0] / h;
+            if (piles[0] % h == 0) {
+            return ans;
+            } else {
+                ans++;
+            }
+        }
+        int minEle = 1;
+        int maxEle = piles[0];
+        for(int i = 1; i < piles.size(); i++) {
+            maxEle = max(maxEle, piles[i]);
+        }
+        long long int mid = (minEle + maxEle) / 2;
+        long long int finalans = INT_MAX;
+
+        while(minEle <= maxEle) {
+            long long int hrCnt = 0;
+            
+              for (int i = 0; i < piles.size(); i++) {
+                //ceil function rounds of two neares integer
+                int additionalHours = ceil((double)(piles[i] - mid) / mid);
+                if (mid >= piles[i]) {
+                    hrCnt++;
+                } else if (additionalHours > 0) {
+                    hrCnt += additionalHours + 1;
+                } else {
+                    hrCnt += 2;
+                }
+            }
+            
+         //   for (int i = 0; i < piles.size(); i++) {
+           //     int additionalHours = ceil((double)(piles[i] - mid) / mid);
+             //   if (mid >= piles[i]) {
+               //     hrCnt++;
+               // }
+               // else{
+                //    int newAns=piles[i]/mid;
+                 //   if (piles[i] % mid == 0) {
+                   //     hrCnt=hrCnt+newAns;
+                   // } else {
+                    //    hrCnt=hrCnt+newAns+1;
+                   // }   
+                //} 
+            //}
+            if(hrCnt <= h) {
+                finalans = min(finalans, mid);
+                maxEle = mid - 1;
+            } else {
+                minEle = mid + 1;
+            }
+            mid = (minEle + maxEle) / 2;
+        }
+        return finalans;
+    }
+};
+
+
+
+//Optimized Solution
+
+class Solution {
+public:
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int l = 1;
+        int r = piles[0];
+        for (int i = 0; i < piles.size(); i++) {
+            r = max(r, piles[i]);
+        }
+        
+        int ans = -1;
+        while (l <= r) {
+            int m = (l + r) / 2;
+            if (check(piles, h, m)) {
+                r = m - 1;
+                ans = m;
+            } else {
+                l = m + 1;
+            }
+        }
+        
+        return ans;
+    }
+
+    bool check(vector<int>& piles, int h, int k) {
+        if (k == 0) {
+            return false;
+        }
+        
+        int i = 0;
+        while (h >= 0 && i < piles.size()) {
+            h -= ceil((double)piles[i] / k);
+            i++;
+        }
+        
+        return h >= 0 && i == piles.size();
+    }
+};
