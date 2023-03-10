@@ -1,0 +1,71 @@
+// class Solution {
+// public:
+//     ListNode* reverseBetween(ListNode* head, int left, int right) {
+//         stack<int> s;
+//         ListNode* temp = head;
+//         ListNode* prev = NULL;
+//         int i = 1;
+
+//         // Traverse the list to the left boundary
+//         while (i < left) {
+//             prev = temp;
+//             temp = temp->next;
+//             i++;
+//         }
+
+//         // Push the nodes between left and right boundary onto the stack
+//         while (i <= right) {
+//             s.push(temp->val);
+//             temp = temp->next;
+//             i++;
+//         }
+
+//         // Pop the nodes from the stack and insert them back into the list
+//         temp = prev;
+//         while (!s.empty()) {
+//             ListNode* node = new ListNode(s.top());
+//             s.pop();
+
+//             if (temp == NULL) {
+//                 head = node;
+//                 temp = node;
+//             } else {
+//                 temp->next = node;
+//                 temp = temp->next;
+//             }
+//         }
+
+//         // Connect the reversed sublist to the rest of the list
+//         temp->next = prev->next;
+//         prev->next = head;
+
+//         return head;
+//     }
+// };
+class Solution {
+public:
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        if (head == NULL) {
+            return NULL;
+        }
+        
+        ListNode* dummy = new ListNode(0);
+        dummy->next = head;
+        ListNode* prev = dummy;
+        
+        for (int i = 1; i < left; i++) {
+            prev = prev->next;
+        }
+        
+        ListNode* curr = prev->next;
+        for (int i = left; i < right; i++) {
+            ListNode* temp = curr->next;
+            curr->next = temp->next;
+            temp->next = prev->next;
+            prev->next = temp;
+        }
+        
+        return dummy->next;
+    }
+};
+
