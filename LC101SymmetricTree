@@ -1,0 +1,64 @@
+// /**
+//  * Definition for a binary tree node.
+//  * struct TreeNode {
+//  *     int val;
+//  *     TreeNode *left;
+//  *     TreeNode *right;
+//  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+//  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+//  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+//  * };
+//  */
+// class Solution {
+// public:
+//     void leftSubTree(TreeNode*root,vector<int>&res1){
+//         if(root==NULL)
+//         return;
+//         leftSubTree(root->left,res1);
+//         res1.push_back(root->val);
+//         leftSubTree(root->right,res1);
+//     }
+//     void rightSubTree(TreeNode*root,vector<int>&res2){
+//         if(root==NULL)
+//         return;
+//         vector<int>res;
+//         rightSubTree(root->left,res2);
+//         res2.push_back(root->val);
+//         rightSubTree(root->right,res2);
+//     }
+//     bool isSymmetric(TreeNode* root) {
+//         vector<int>res1;
+//         vector<int>res2;
+//         leftSubTree(root->left,res1);
+//         rightSubTree(root->right,res2);
+//         reverse(res2.begin(),res2.end());
+//         if(res1==res2)
+//         return true;
+//         else return false;
+
+        
+//     }
+// };
+
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        if (root == nullptr) {
+            return true;
+        }
+        return isSymmetricCheck(root->left, root->right);
+    }
+    
+    bool isSymmetricCheck(TreeNode* left, TreeNode* right) {
+        if (left == nullptr && right == nullptr) {
+            return true;
+        }
+        if (left == nullptr || right == nullptr) {
+            return false;
+        }
+        if (left->val != right->val) {
+            return false;
+        }
+        return isSymmetricCheck(left->left, right->right) && isSymmetricCheck(left->right, right->left);
+    }
+};
