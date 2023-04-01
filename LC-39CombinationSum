@@ -1,0 +1,52 @@
+class Solution {
+public:
+   vector<vector<int>> finalList;
+    void solveRec(vector<int>& candidates, int pos, int target, vector<int>& ans) {
+     
+        if (pos == candidates.size() || target < 0) {
+            return ;
+        }
+        if (target == 0) {
+            finalList.push_back(ans);
+            return ;
+        }
+        
+        solveRec(candidates, pos+1, target, ans);
+        ans.push_back(candidates[pos]);
+        solveRec(candidates, pos, target - candidates[pos], ans);
+        ans.pop_back();
+    }
+    
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<int> ans;
+        solveRec(candidates, 0, target, ans);
+        return finalList;
+    }
+};
+
+
+// class Solution {
+// public:
+//     vector<vector<int>>ans;
+//     void help(int i,int t,vector<int>&c,vector<int>&vec){
+//         if(t==0){
+//             ans.push_back(vec);
+//             return;
+//         }
+//         if(t<0){
+//             return;
+//         }
+//         if(i==c.size()){
+//             return;
+//         }
+//         help(i+1,t,c,vec); // if ith ele is ignored
+//         vec.push_back(c[i]);
+//         help(i,t-c[i],c,vec);// if ith ele is not ignored
+//         vec.pop_back();
+//     }
+//     vector<vector<int>> combinationSum(vector<int>& c, int t) {
+//         vector<int>vec;
+//         help(0,t,c,vec);
+//         return ans;
+//     }
+// };
