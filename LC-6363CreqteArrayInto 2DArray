@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<vector<int>> findMatrix(vector<int>& nums) {
+        map<int,int> mp;
+        for(int i=0; i<nums.size(); i++) {
+            mp[nums[i]]=0;
+        }
+        vector<vector<int>> finalAns;
+        int k=0;
+        for(int j=0; j<nums.size(); j++) {
+            int freq = mp[nums[j]];
+            if(freq >= finalAns.size()) {
+                finalAns.push_back(vector<int>());
+            }
+            finalAns[freq].push_back(nums[j]);
+            mp[nums[j]]++;
+        }
+        return finalAns;
+    }
+};
