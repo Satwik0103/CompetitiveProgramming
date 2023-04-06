@@ -1,0 +1,59 @@
+// class Solution {
+// public:
+// int solveRec(vector<int>& nums,int index,int sum){
+//     int n=nums.size();
+//     if(index==n){
+//     return sum;
+//     }
+//     //cout<<sum<<index<<endl;
+//     int inc=solveRec(nums,index+1,sum+nums[index]);
+//     int exc=solveRec(nums,index+1,0);
+//     int sol=max(inc,max(exc,sum));
+//     return sol;
+// }
+// int solveMem(vector<int>& nums,int index,int sum,vector<vector<int>>dp){
+//     int n=nums.size();
+//     if(index==n){
+//     return sum;
+//     }
+//     if(dp[index][sum]!=-1)
+//     return dp[index][sum];
+//     //cout<<sum<<index<<endl;
+//     int inc=solveMem(nums,index+1,sum+nums[index],dp);
+//     int exc=solveMem(nums,index+1,0,dp);
+//     int sol=max(inc,max(exc,sum));
+//     return dp[index][sum]=sol;
+// }
+//     int maxSubArray(vector<int>& nums) {
+//         int n=nums.size();
+//         int maxEle=*max_element(nums.begin(),nums.end());
+//         int sum=0;
+//         if(maxEle>0)
+//         sum=0;
+//         else
+//         return maxEle;
+//         //int ans= solveRec(nums,0,sum);
+//         vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
+//         int ans=solveMem(nums,0,sum,dp);
+//         return ans;
+        
+//     }
+// };
+
+
+//Memoization odnt work as sum can be -ve but dp can not be negative
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int n = nums.size();
+        int sum = 0, maxi = nums[0];
+        for (int i = 0; i < n; i++) {
+            sum += nums[i]; 
+            maxi = max(maxi, sum);
+            if(sum<0)
+            sum=0;
+        } 
+        return maxi;
+    }
+};
