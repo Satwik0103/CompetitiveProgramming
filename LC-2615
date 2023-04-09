@@ -1,0 +1,40 @@
+// class Solution {
+// public:
+//     vector<long long> distance(vector<int>& nums) {
+//        vector<long long>ans(nums.size(),0);
+//         // for(int i=0;i<nums.size();i++){
+//         //     for(int j=0;j<nums.size();j++){
+//         //         if(nums[i]==nums[j]){
+//         //             ans[i]+=abs(i-j);
+//         //         }
+//         //     }
+//         // }
+//         // return ans;
+      
+//     }
+// };
+class Solution {
+public:
+   
+ vector<long long> distance(vector<int>& arr) {
+     unordered_map<int, vector<int>> m;
+    vector<long long> res(arr.size());
+    for (int i = 0; i < arr.size(); i++) {
+        m[arr[i]].push_back(i);
+    }
+    for (auto i = m.begin(); i != m.end(); i++) {
+        vector<int> l = i -> second;
+        vector<long long> pre(l.size() + 1, 0);
+        for (int j = 0; j < l.size(); j++) 
+            pre[j + 1] = pre[j] + l[j];
+        for (int j = 0; j < l.size(); j++) {
+            long long v = l[j];
+            res[l[j]] = (v * (j + 1) - pre[j + 1]) 
+                 + ((pre[l.size()] - pre[j]) - v * (l.size() - (j)));
+        }
+    }
+    return res;
+     
+}
+};
+
