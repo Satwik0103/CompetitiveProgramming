@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int findCenter(vector<vector<int>>& edges) {
+        // vector<int,vector<int>>adj;
+        // for(i=0;i<edges.size();i++){
+        // int u=edges[i][0];
+        // int v=edges[i][1];
+        // adj[u].push_back(v);
+        // adj[v].push_back(u);
+
+        // }
+     
+        int n = 0;
+        int center = edges[0][0];
+        //cout<<center<<edges[1][1]<<edges[1][0];
+        if(edges[1][0] != center && edges[1][1] != center)
+            center = edges[0][1];
+        return center;                
+    }
+};
