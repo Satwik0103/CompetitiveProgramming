@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+void prepareAdjList(vector<vector<int>>& edges,unordered_map<int,list<int>>& adj){
+  for (int i = 0; i < edges.size(); i++) {
+    int u = edges[i][0];
+    int v = edges[i][1];
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+  }
+}
+bool detectCycle(int node,unordered_map<int,list<int>>&adj,unordered_map<int,bool>&visited){
+    queue<int>q;
+    q.push(node);
+    unordered_map<int,int>parent;
+    visited[node]=1;
+    parent[node]=-1;
+    while(!q.empty()){
+        int t=q.front();
+        q.pop();
+        for(auto j:adj[t]){
+            if(visited[j]==true && j!=parent[t]){
+                return true;
+            }
+            else if(!visited[j]){
+                visited[j]=true;
+                parent[j]=t;
+                q.push(j);
+            }
+        }
+
+    }
+      return false;
+}
+string cycleDetection (vector<vector<int>>& edges, int n, int m)
+{
+    // Write your code here.
+    unordered_map<int,list<int>>adj;
+    prepareAdjList(edges,adj);
+    unordered_map<int,bool>visited;
+    for(int i=0;i<n;i++){
+        if(!visited[i]){
+            bool ans=detectCycle(i,adj,visited);
+            if (ans==1)
+            return "Yes";
+        }
+    }
+    return "No";
+}
