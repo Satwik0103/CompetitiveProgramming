@@ -1,0 +1,68 @@
+// class Solution {
+// public:
+//     bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
+//         stack <int>s;
+//         vector<int>res;
+//         int j=0;
+//         int i=0;
+//         while(i<pushed.size() && j<popped.size()){
+//             if(!s.empty()&&s.top()==popped[j]){
+//             int t=s.top();
+//             s.pop();
+//             res.push_back(t);
+//             j++;
+//             }
+//        else if(pushed[i]!=popped[j]){
+//         s.push(pushed[i]);
+//         i++;
+//        }
+//         else{
+//         s.push(pushed[i]);
+//         int t=s.top();
+//         s.pop();
+//         res.push_back(t);
+//         j++;
+//         }
+//         }
+       
+//         while(!s.empty()){
+//             int t=s.top();
+//             s.pop();
+//             res.push_back(t);
+//         }
+//          for(i=0;i<res.size();i++){
+//             cout<<res[i];
+//         }
+//         if(res==popped)
+//         return true;
+//         else return false;
+//     }
+// };
+class Solution {
+public:
+    bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
+        stack<int> s;
+        int i = 0, j = 0;
+        while (i < pushed.size() && j < popped.size()) {
+            if (!s.empty() && s.top() == popped[j]) {
+                s.pop();
+                j++;
+            } else if (pushed[i] == popped[j]) {
+                i++;
+                j++;
+            } else {
+                s.push(pushed[i]);
+                i++;
+            }
+        }
+        while (!s.empty() && j < popped.size()) {
+            if (s.top() == popped[j]) {
+                s.pop();
+                j++;
+            } else {
+                break;
+            }
+        }
+        return s.empty();
+    }
+};
