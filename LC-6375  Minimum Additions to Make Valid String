@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int addMinimum(string word) {
+//         int max_freq=0;
+//         unordered_map<char,int>mp={
+//             {'a', 0},
+//             {'b', 0},
+//             {'c', 0}
+//         };
+    
+//         for(int i=0;i<word.length();i++){
+//             mp[word[i]]++;
+//             if (mp[word[i]] > max_freq) {
+//             max_freq = mp[word[i]];
+//         }
+//         }
+        
+//         int ans=0;
+//         for(auto i:mp){
+//             ans+=max_freq-i.second;
+//         }
+//         return ans;
+        int ans=0;
+        for(int i=0;i<word.length();i++){
+            if(word[i]=='a'&& word[i+1]=='b'&& word[i+2]=='c'){
+                ans+=0;
+                i=i+2;
+            }
+           else if((word[i]=='a'&& (word[i+1]=='b'|| word[i+1]=='c'))||(word[i]=='b' && word[i+1]=='c')){
+               ans+=1;
+               i++;
+           }
+            else{
+                ans+=2;
+            }
+            
+        }
+        return ans;
+        
+    }
+};
