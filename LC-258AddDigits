@@ -1,0 +1,30 @@
+// class Solution {
+// public:
+//     int addDigits(int num) {
+//         int ans=num;
+//         int res=ans;
+//         while(res>9){
+//             ans=res;
+//             res=0;
+//         while(ans>0){ 
+//             int a=ans%10;
+//             ans=ans/10;
+//             res+=a;
+//         }
+//          }
+//         return res;   
+//     }
+// };
+class Solution {
+public:
+    int addDigits(int num) {
+        if (num == 0) {
+            return 0;
+        }
+        int digital_root = num % 9;
+        if (digital_root == 0) {
+            digital_root = 9;
+        }
+        return digital_root;
+    }
+};
