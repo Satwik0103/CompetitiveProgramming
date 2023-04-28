@@ -1,0 +1,31 @@
+class Solution {
+public:
+
+bool isCheck(int row,int col,vector<vector<int>>& mat){
+     int n=mat.size();
+        int m=mat[0].size();
+  int dir[][2]={{1,0},{0,1},{-1,0},{0,-1}};
+    for(int i=0;i<4;i++){
+        int newRow=row+dir[i][0];
+        int newCol=col+dir[i][1];
+      if(newRow >= 0 && newCol >= 0 && newRow < n && newCol < m && mat[newRow][newCol] > mat[row][col]){
+               return false;
+             }
+    }
+    return true;
+}
+    vector<int> findPeakGrid(vector<vector<int>>& mat) {
+        int n=mat.size();
+        int m=mat[0].size();
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+             if(isCheck(i,j,mat)){
+             return {i,j};
+             }
+            }
+        }
+
+        return {-1,-1};
+    }
+};
