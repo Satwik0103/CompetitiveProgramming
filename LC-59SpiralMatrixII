@@ -1,0 +1,68 @@
+// class Solution {
+// public:
+//     vector<vector<int>> generateMatrix(int n) {
+//         vector<vector<int>>res(n,vector<int>(n,0));
+//         int startRow=0;
+//         int endRow=n-1;
+//         int startCol=0;
+//         int endCol=n-1;
+//         int cnt=1;
+//        while(cnt<=n*n){
+//             for(int j=startCol;j<=endCol;j++){
+//                 res[startRow][j]=cnt;
+//                 cnt++;
+//             }
+//             startRow++;
+//             for(int j=startRow;j<=endRow;j++){
+//                 res[j][endCol]=cnt;
+//                 cnt++;
+//             }
+//             endCol--;
+//             for(int j=endCol;j>=startCol;j--){
+//                 res[endRow][j]=cnt;
+//                 cnt++;
+//             }
+//             endRow--;
+//             for(int j=endRow;j>=startRow;j--){
+//                 res[j][startCol]=cnt;
+//                 cnt++;
+//             }
+//             startCol++;
+//        }
+//         return res;
+//     }
+// };
+
+
+
+
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        vector<vector<int>> res(n, vector<int>(n, 0));
+        int startRow = 0;
+        int endRow = n - 1;
+        int startCol = 0;
+        int endCol = n - 1;
+        int cnt = 1;
+        while (cnt <= n * n) {
+            for (int j = startCol; j <= endCol; j++, cnt++) {
+                res[startRow][j] = cnt;
+            }
+            startRow++;
+            for (int j = startRow; j <= endRow; j++, cnt++) {
+                res[j][endCol] = cnt;
+            }
+            endCol--;
+            for (int j = endCol; j >= startCol; j--, cnt++) {
+                res[endRow][j] = cnt;
+            }
+            endRow--;
+            for (int j = endRow; j >= startRow; j--, cnt++) {
+                res[j][startCol] = cnt;
+            }
+            startCol++;
+        }
+        return res;
+    }
+};
