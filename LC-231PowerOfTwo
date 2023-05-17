@@ -1,0 +1,20 @@
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        int cnt=0;
+        if(n<0)
+        return false;
+        while(n!=0){
+            //Last bit checking with 1
+            int a=n&1;
+            if(a==1)
+            cnt++;
+            //Bitwise Right SHift  EG-1000>>1==100
+            n=n>>1;
+        }
+        if(cnt==1)
+        return true;
+        else
+        return false;
+    }
+};
