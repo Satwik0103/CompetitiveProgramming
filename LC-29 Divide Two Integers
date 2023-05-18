@@ -1,0 +1,36 @@
+// class Solution {
+// public:
+//     int divide(int dividend, int divisor) {
+//          if(dividend == INT_MIN && divisor == -1){
+//             return INT_MAX;
+//         }
+//         return dividend/divisor;
+//     }
+// };
+
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        if(dividend == INT_MIN && divisor == -1){
+            return INT_MAX;
+        }
+        long long dvd = labs(dividend), dvs = labs(divisor), result = 0;
+        int sign = (dividend > 0) ^ (divisor > 0) == 0 ? 1 : -1;
+        while(dvd >= dvs){
+            long long temp = dvs, mul = 1;     //Eg-dvd=100 dvs=3=>temp=3mul=1
+            while(temp << 1 <= dvd){      //3<<1  3 left shit 1 time is 6  ->11<<1=110
+                temp <<= 1;            //temp will be 6,12,24,48,96
+                mul <<= 1;           //mul will be 2,4,8,16,32  after 1 st iteration 
+            }
+            dvd -= temp;         //dvd=100-96=4
+            result += mul;    //reult=32  As dvd=4>dvs=3 so one more time go inside there mul=1 result+=mul=33
+        } 
+        return sign*result;
+    }
+};
+//TC-O(log(n)*log(n))
+//Sc=0(1)
+
+
+
+
