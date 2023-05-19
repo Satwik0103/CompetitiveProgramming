@@ -1,0 +1,18 @@
+
+
+class Solution {
+public:
+    int minBitFlips(int start, int goal) {
+        
+        int a = (start ^ goal); // this will do xor of given numbers same no digit will be 0 and dif digit will be 1
+           //now count set bits
+        int count = 0; 
+        while(a){
+            if(a&1){
+                count++;
+            }
+        a = a>>1;  // this is right shift operator
+        }
+        return count;
+    }
+};
