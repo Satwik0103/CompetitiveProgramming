@@ -1,0 +1,16 @@
+class Solution {
+public:
+    char nextGreatestLetter(vector<char>& letters, char target) {
+        char smallest='z';
+        int cnt=0;
+        for (int z=0;z<letters.size();z++){
+            if(letters[z]>target && letters[z]<=smallest){
+                cnt=1;
+                smallest=letters[z];
+            }
+        }
+        if(smallest=='z' && cnt==0)
+        return letters[0];
+        return smallest;
+    }
+};
