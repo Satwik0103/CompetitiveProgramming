@@ -1,0 +1,72 @@
+// // class Solution {
+// // public:
+// //     int findContentChildren(vector<int>& g, vector<int>& s) {
+// //         int cnt=0;
+// //         int cookies=s[0];
+// //         int studentGreed=0;
+// //        for(int i=0;i<g.size();i++){
+// //            studentGreed+=g[i];
+// //        }
+// //        for(int j=0;j<s.size();j++){
+// //            cookies+=s[j];
+// //        }
+// //        for(int k=0;k<g.size();k++){
+// //             studentGreed=studentGreed-g[k];
+// //             cout<<studentGreed<<endl;
+// //              if(k<s.size()){
+// //            if(g[k]<=cookies){
+// //                cookies=s[k];
+// //                cout<<"GHere";
+// //                cnt++;  
+// //            }
+          
+// //             cookies+=s[k+1];
+// //              }
+// //             cout<<cookies<<endl;
+// //        }
+// //         return cnt;
+        
+// //     }
+// // };
+
+// class Solution {
+// public:
+//     int findContentChildren(vector<int>& g, vector<int>& s) {
+//         int cnt=0;
+//         int cookies=0;
+//         int studentGreed=0;
+//         int z=0;
+//        for(int k=0;k<g.size();k++){
+//            if(z<s.size())
+//            cookies+=s[z];
+//            cout<<cookies<<endl;
+//            while(g[k]<=cookies){
+//                cnt++;
+//                cookies=0;
+//                z++;
+//            }
+//            z++;
+//        }
+//        return cnt; 
+//     }
+// };
+class Solution {
+public:
+    int findContentChildren(vector<int>& g, vector<int>& s) {
+        int cnt = 0;
+        sort(g.begin(), g.end());
+        sort(s.begin(), s.end());
+        int i = 0;  // Pointer for g
+        int j = 0;  // Pointer for s
+        
+        while (i < g.size() && j < s.size()) {
+            if (g[i] <= s[j]) {
+                cnt++;
+                i++;
+            }
+            j++;
+        }
+        
+        return cnt;
+    }
+};
