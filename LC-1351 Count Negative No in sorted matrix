@@ -1,0 +1,37 @@
+// class Solution {
+// public:
+//     int countNegatives(vector<vector<int>>& grid) {
+//         int n=grid.size(),m=grid[0].size();
+//         int ans=0,res=0;
+//         for(int i=0;i<n;i++){
+//             for(int j=m-1-ans;j>=0&&grid[i][j]<0;j--){
+//                 ans++;
+//             }
+//             res+=ans;
+//         }
+//         return res;
+//     }
+// };
+// Tc=O(N*M)
+
+class Solution {
+public:
+    int countNegatives(vector<vector<int>>& grid) {
+        int count = 0;
+        int rows = grid.size();
+        int cols = grid[0].size();
+        int row = 0;
+        int col = cols - 1;
+        
+        while (row < rows && col >= 0) {
+            if (grid[row][col] < 0) {
+                count += (rows - row);
+                col--;
+            } else {
+                row++;
+            }
+        }
+        
+        return count;
+    }
+};
