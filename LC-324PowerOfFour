@@ -1,0 +1,40 @@
+// class Solution {
+// public:
+//     bool isPowerOfFour(int n) {
+//         long long int ans=4;
+//         if(n==1)
+//         return true;
+//         for(int i=1;i<=n;i++){
+//             if(ans==n)
+//             return true;
+//             else if(ans>n){
+//                 return false;
+//             }
+//             else{
+//                 ans*=4;
+//             }
+
+//         }
+//         return false;
+        
+//     }
+// };
+
+// class Solution {
+// public:
+//     bool isPowerOfFour(int n) {
+//         if(n==0){
+//             return false;
+//         }
+//         while(n%4 == 0){
+//             n /= 4;
+//         }
+//         return n==1;   
+//     }
+// // };
+class Solution {
+public:
+    bool isPowerOfFour(int n) {
+        return (n>0) && ((n&(n-1))==0) && ((n%3==1));
+    }
+};
