@@ -1,0 +1,39 @@
+// class Solution {
+// public:
+//     int getMinimumDifference(TreeNode* root) {
+//         if (root == nullptr) {
+//             return INT_MAX; 
+//         }
+        
+//         int res = INT_MAX; 
+        
+//         if (root->left != nullptr) {
+//             int leftVal = root->left->val;
+//             res = min(res, abs(leftVal - root->val));
+//             res = min(res, getMinimumDifference(root->left));
+//         }
+//         cout<<res<<endl;
+//         if (root->right != nullptr) {
+//             int rightVal = root->right->val;
+//             res = min(res, abs(rightVal - root->val));
+//             res = min(res, getMinimumDifference(root->right));
+//         }
+//         cout<<res<<endl;
+//         return res;
+//     }
+// };
+class Solution {
+public:
+    int min_dif = INT_MAX;
+    int val = -1;
+int getMinimumDifference(TreeNode* root) {
+    if (root->left != NULL)
+        getMinimumDifference(root->left);
+    if (val >= 0)
+        min_dif = min(min_dif, root->val - val);
+    val = root->val;
+    if (root->right != NULL)
+        getMinimumDifference(root->right);
+    return min_dif;
+    }
+};
