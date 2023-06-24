@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int arrangeCoins(int n) {
+       long long i=0;
+      long long j=n;
+      
+        while(i<=j)
+        {
+            long long m=(i+j)/2;
+            if((m*(m+1))/2 >n)
+            j=m-1;
+            else
+            {
+                i=m+1;
+              
+            }
+        }
+        return (int)i-1;
+    }
+};
