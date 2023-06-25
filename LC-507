@@ -1,0 +1,20 @@
+class Solution {
+public:
+    bool checkPerfectNumber(int num) {
+        if (num <= 1)
+            return false;
+
+        int sum = 1; // Initialize the sum with 1 since 1 is always a factor
+
+        for (int i = 2; i * i <= num; i++) {
+            if (num % i == 0) {
+                sum += i; // Add the factor
+                if (i != num / i) {
+                    sum += num / i; // Add the corresponding factor
+                }
+            }
+        }
+
+        return sum == num;
+    }
+};
