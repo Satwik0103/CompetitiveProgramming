@@ -1,0 +1,38 @@
+class Solution {
+public:
+//Binary Search
+    // int search(int target,vector<int>&number,int low,int high){
+    //     while(low<=high){
+    //         int mid=(low+high)/2;
+    //         if(number[mid]>target)
+    //         high=mid-1;
+    //         else if(number[mid]<target)
+    //         low=mid+1;
+    //         else
+    //         return mid;
+    //     }
+    //     return -1;
+    // }
+    // vector<int> twoSum(vector<int>& numbers, int target) {
+    //     for(int i=0;i<numbers.size();i++){
+    //         int j=search(target-numbers[i],numbers,i+1,numbers.size()-1);
+    //         if(j!=(-1))
+    //         return {i+1,j+1};
+    //     }
+    //     return {-1,-1};
+    // }
+
+//2Pointer
+     vector<int> twoSum(vector<int>& numbers, int target) {
+        int l = 0, r = numbers.size() -1;
+        while(l < r){
+            if(numbers[l] + numbers[r] == target)
+                return {l+1,r+1};
+            else if(numbers[l] + numbers[r] > target)
+                r--;
+            else
+                l++;
+        }
+	    return {};
+    }
+};
