@@ -1,0 +1,30 @@
+function searchElementBinary(arr, target) {
+  let r = arr.length;
+  let c = arr[0].length;
+
+  for (let i = 0; i < r; i++) {
+    let start = 0;
+    let end = c - 1;
+
+    while (start <= end) {
+      let mid = Math.floor((start + end) / 2);
+
+      if (arr[i][mid] === target) {
+        let index = { "firstIndex": i, "secondIndex": mid };
+        console.log(index);
+        return index;
+      } else if (arr[i][mid] > target) {
+        end = mid - 1;
+      } else {
+        start = mid + 1;
+      }
+    }
+  }
+
+  return null;
+}
+
+let arr2D = [[1, 2, 3, 4], [2, 3, 4, 5], [5, 6, 7, 8]];
+let targetValue = 7;
+
+searchElementBinary(arr2D, targetValue);
