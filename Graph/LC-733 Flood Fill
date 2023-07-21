@@ -1,0 +1,21 @@
+class Solution {
+public:
+    void floodFillDFS( int row, int col,int initialColor,int newColor,vector<vector<int>>& image){
+         if (row < 0 || col < 0 || row >= image.size() || col >= image[0].size() || image[row][col] != initialColor)
+            return;
+        image[row][col] = newColor;
+     
+        floodFillDFS(row - 1, col, initialColor, newColor, image); // Up
+        floodFillDFS(row + 1, col, initialColor, newColor, image); // Down
+        floodFillDFS(row, col - 1, initialColor, newColor, image); // Left
+        floodFillDFS(row, col + 1, initialColor, newColor, image); // Right
+
+    }
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int imageColor=image[sr][sc];
+        if(imageColor!=color){
+            floodFillDFS(sr,sc,imageColor,color,image);
+        }
+        return image;
+    }
+};
