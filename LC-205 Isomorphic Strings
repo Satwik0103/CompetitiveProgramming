@@ -1,0 +1,33 @@
+class Solution {
+public:
+    bool isIsomorphic(string s, string t) {
+        if (s.length() != t.length()) {
+            return false; // If the strings have different lengths, they can't be isomorphic.
+        }
+
+        map<char, char> mp;
+
+        for (int i = 0; i < s.length(); i++) {
+            char char_s = s[i];
+            char char_t = t[i];
+
+            if (mp.find(char_s) != mp.end()) {
+                // If the character from s is already mapped, it should be mapped to the same character in t.
+                if (mp[char_s] != char_t) {
+                    return false; // Mapping is inconsistent.
+                }
+            } else {
+                // If the character from s is not mapped yet, check if the corresponding character in t is already mapped to some other character.
+                for (auto it = mp.begin(); it != mp.end(); it++) {
+                    if (it->second == char_t) {
+                        return false; // Mapping is inconsistent.
+                    }
+                }
+                // Map the character from s to the character in t.
+                mp[char_s] = char_t;
+            }
+        }
+
+        return true;
+    }
+};
