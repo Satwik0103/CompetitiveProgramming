@@ -1,0 +1,36 @@
+#include<iostream>
+using namespace std;
+int findTotalWays(int curri,int currj,int endi,int endj){
+    int a=0;
+    int b=0;
+    if(curri==endi && currj==endj){    
+        return 1;        
+    }
+    //goingrightFirst
+    if(currj+1<=endj)   
+    a+=findTotalWays(curri,currj+1,endi,endj);  
+  //  cout<<a<<endl;
+    //going down
+    if(curri+1<=endi)
+    b+=findTotalWays(curri+1,currj,endi,endj);   
+   // cout<<b<<endl;
+    int s=a+b;
+    return s;
+}
+
+int main(){
+    
+    int endi=1;
+    int endj=1;
+    int curri=0;
+    int currj=0;
+
+       int right=findTotalWays(curri,currj+1,endi,endj);   
+       //cout<<right;
+       //going down
+       int down=findTotalWays(curri+1,currj,endi,endj);
+     //  cout<<down;
+       cout<< right+down;
+
+}
+
