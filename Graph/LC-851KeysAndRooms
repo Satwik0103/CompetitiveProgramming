@@ -1,0 +1,30 @@
+class Solution {
+public:
+void dfs(int node, vector<vector<int>>& rooms, vector<int>& visited) {
+        visited[node] = 1;
+        for (int neighbor : rooms[node]) {
+            if (!visited[neighbor]) {
+                dfs(neighbor, rooms, visited);
+            }
+        }
+    }
+    bool canVisitAllRooms(vector<vector<int>>& rooms) {
+        int n = rooms.size();
+        vector<int> visited(n, 0);
+        visited[0]=1;
+       if (!rooms[0].empty() && !visited[rooms[0][0]]) {
+           for(int k=0;k<rooms[0].size();k++)
+            dfs(rooms[0][k], rooms, visited);
+        }
+        // Check if all rooms have been visited
+        for (int roomVisited : visited) {
+            cout<<roomVisited;
+            if (roomVisited == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
+
