@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int ans = 0;
+
+    void dfs(unordered_map<int, vector<int>>& mp, vector<int>& visited, int node) {
+        visited[node] = 1;
+        for (auto i : mp[node]) {
+            if (i > 0) {
+                if (visited[i] == 0) {
+                    dfs(mp, visited, i);
+                }
+            } else {
+                int absI = abs(i); // Store the absolute value of i
+                if (visited[absI] == 0) {
+                    ans++;
+                    dfs(mp, visited, absI);
+                }
+            }
+        }
+    }
+
+    int minReorder(int n, vector<vector<int>>& c) {
+        int s = c.size();
+        unordered_map<int, vector<int>> mp;
+        vector<int> visited(s+1, 0);
+
+        for (int i = 0; i < s; i++) {
+            mp[c[i][1]].push_back(c[i][0]);
+            mp[c[i][0]].push_back(-c[i][1]);
+        }
+        
+        dfs(mp, visited, 0);
+        return ans;
+    }
+};
