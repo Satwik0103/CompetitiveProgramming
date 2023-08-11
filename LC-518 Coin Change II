@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int solveMem(int remAmt, vector<int>& coins, int amount, int i,vector<vector<int>>&dp) {
+        if (remAmt == amount) {
+            return 1;
+        }
+        if(dp[remAmt][i]!=-1)
+        return dp[remAmt][i];
+
+        if (i >= coins.size() || remAmt > amount) {
+            return 0;
+        }
+
+        int ans1 = solveMem(remAmt + coins[i], coins, amount, i,dp);
+        int ans2 = solveMem(remAmt, coins, amount, i + 1,dp);
+        return dp[remAmt][i]=ans1+ans2;
+    }
+
+
+    int coinCnt(int remAmt, vector<int>& coins, int amount, int i) {
+        if (remAmt == amount) {
+            return 1;
+        }
+        
+        if (i >= coins.size() || remAmt > amount) {
+            return 0;
+        }
+
+        int ans1 = coinCnt(remAmt + coins[i], coins, amount, i);
+        int ans2 = coinCnt(remAmt, coins, amount, i + 1);
+        
+        return ans1 + ans2;
+    }
+    
+    int change(int amount, vector<int>& coins) {
+        // int ans = coinCnt(0, coins, amount, 0);
+        int n=coins.size();
+        vector<vector<int>>dp(5*amount,vector<int>(n+1,-1));
+        int ans=solveMem(0, coins, amount, 0,dp);
+        return ans;
+    }
+};
