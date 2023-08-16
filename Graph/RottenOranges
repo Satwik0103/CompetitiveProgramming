@@ -1,0 +1,146 @@
+//We cannot solve this problem with dfs because we want to travel in all direction at 1 time by dfs we are going in dept of 1 point and thatswhy calculating oranges is difficult using dfs algo
+// class Solution {
+// public:
+// int cnt=0;
+// void dfs(int i,int j,vector<vector<int>>& grid,int m,int n, vector<vector<int>>& visited){
+//     if(i>=0 && i<m && j>=0 && j<n && grid[i][j]==1 && visited[i][j]==0){
+//         // cnt++;
+//         grid[i][j]=2;
+//         visited[i][j]=1;
+//         dfs(i+1,j,grid,m,n,visited);
+//         dfs(i,j+1,grid,m,n,visited);
+//         dfs(i-1,j,grid,m,n,visited);
+//         dfs(i,j-1,grid,m,n,visited);
+//         cnt++;
+//     }
+// }
+//     int orangesRotting(vector<vector<int>>& grid) {
+//         int n=grid.size();
+//         int m=grid[0].size();
+//          vector<vector<int>> visited(m+1, vector<int>(n+1, 0));
+//         for(int i=0;i<n;i++){
+//             for(int j=0;j<m;j++){
+//                 if(grid[i][j]==2){
+//                     visited[i][j]=1;
+//                     dfs(i+1,j,grid,m,n,visited);
+//                     dfs(i,j+1,grid,m,n,visited);
+//                     dfs(i-1,j,grid,m,n,visited);
+//                     dfs(i,j-1,grid,m,n,visited);
+//                     cnt++;
+//                 }
+//             }
+//         }
+
+//         for(int i=0;i<n;i++){
+//             for(int j=0;j<m;j++){
+//                 if(grid[i][j]==1){
+//                     return -1;
+//                 }
+//             }
+//         }
+//         return cnt;
+//     }
+// };
+
+//Solving by bfs
+
+// class Solution {
+// public:
+//     int orangesRotting(vector<vector<int>>& grid) {
+//         int n = grid.size();
+//         int m = grid[0].size();
+//         vector<vector<int>> visited(n, vector<int>(m, 0)); // Corrected visited initialization
+        
+//         int dir[][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}}; // Corrected dir array
+        
+//         queue<pair<int, int>> q;
+        
+//         // Enqueue rotten oranges
+//         for (int i = 0; i < n; i++) {
+//             for (int j = 0; j < m; j++) {
+//                 if (grid[i][j] == 2) {
+//                     q.push(make_pair(i, j));
+//                     visited[i][j] = 1;
+//                 }
+//             }
+//         }
+        
+//         int cnt = -1; // Initialize cnt to -1, as you're counting levels
+        
+//         while (!q.empty()) {
+//             int size = q.size();
+//             for (int i = 0; i < size; i++) {
+//                 pair<int, int> p = q.front();
+//                 q.pop();
+//                 int x = p.first;
+//                 int y = p.second;
+                
+//                 for (int k = 0; k < 4; k++) {
+//                     int newX = x + dir[k][0];
+//                     int newY = y + dir[k][1];
+//                     if (newX >= 0 && newX < n && newY >= 0 && newY < m && grid[newX][newY] == 1 && visited[newX][newY] == 0) {
+//                         q.push(make_pair(newX, newY));
+//                         visited[newX][newY] = 1;
+//                     }
+//                 }
+//             }
+//             cnt++; // Increment the count after each level
+//         }
+        
+//         for (int i = 0; i < n; i++) {
+//             for (int j = 0; j < m; j++) {
+//                 if (grid[i][j] == 1 && visited[i][j] == 0) {
+//                     return -1;
+//                 }
+//             }
+//         }
+        
+//         return max(cnt, 0); // Return max(cnt, 0) to handle the case when no oranges were rotten initially
+//     }
+// };
+
+class Solution {
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+        queue<pair<pair<int,int>,int>> q;
+        vector<vector<int>> arr=grid;
+        for(int row=0;row<grid.size();row++){
+            for(int col=0;col<grid[0].size();col++){
+                if(arr[row][col]==2)
+                    q.push({{row,col},0});
+            }
+        }
+        int anstime=0;
+        while(!q.empty()){
+            auto fNode=q.front();
+            q.pop();
+
+            int x=fNode.first.first;
+            int y=fNode.first.second;
+            int time=fNode.second;
+            int dx[]={-1,0,1,0};
+            int dy[]={0,1,0,-1};
+
+            for(int i=0;i<4;i++){
+                int newX=x+dx[i];
+                int newY=y+dy[i];
+                if(newX>=0&&newX<arr.size()
+                &&newY>=0 && newY<arr[0].size()
+                &&arr[newX][newY]==1){
+                    pair<int,int> newcor=make_pair(newX,newY);
+                    q.push({newcor,time+1});
+
+                    anstime=max(anstime,time+1);
+                    arr[newX][newY]=2;
+                }
+            }
+        }
+        for(int i =0;i<arr.size();i++){
+            for(int j=0;j<arr[0].size();j++){
+                if(arr[i][j]==1)
+                return -1;
+            }
+        }
+        return anstime;
+    }
+};
