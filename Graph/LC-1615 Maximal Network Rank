@@ -1,0 +1,70 @@
+// class Solution {
+// public:
+//     int maximalNetworkRank(int n, vector<vector<int>>& roads) {
+//         unordered_map<int,list<int>>adjList;
+//         int s=roads.size();
+//         int m=roads[0].size();
+//         int k=0;
+//         int maxSize=0;
+//         for(int i=0;i<s;i++){
+//             int u=roads[i][0];
+//             int v=roads[i][1];
+//             adjList[u].push_back(v);
+//             adjList[v].push_back(u);
+//         }
+//        for (int k = 0; k < n; k++) {
+//             cout << k << ": ";
+//             for (auto i : adjList[k]) {
+//                 cout << i << " ";
+//             }
+//             cout<<"Size"<<adjList[k].size();
+//             cout << endl;
+//         }
+
+//         vector<pair<int, int>> sortedNodes;
+//         for (auto& entry : adjList) {
+//             sortedNodes.push_back({entry.first, entry.second.size()});
+//         }
+//         sort(sortedNodes.begin(), sortedNodes.end(), [](const pair<int, int>& a, const pair<int, int>& b) {
+//             return a.second > b.second; // Sort in descending order of size
+//         });
+        
+//         // Process the sorted nodes
+//         int cnt=0;
+//         for (auto& nodeInfo : sortedNodes) {
+//             int node = nodeInfo.first;
+//             int size = nodeInfo.second;
+//             cout << "Node " << node << " has adjacency list size " << size << endl;
+//             cnt++;
+//             if(cnt<=2)
+//             maxSize+=size;
+           
+//         }
+//         return maxSize-1;
+
+//     }
+// };
+
+class Solution {
+public:
+    int maximalNetworkRank(int n, vector<vector<int>>& roads) {
+        unordered_map<int, unordered_set<int>> adjList;
+        for (const vector<int>& road : roads) {
+            adjList[road[0]].insert(road[1]);
+            adjList[road[1]].insert(road[0]);
+        }
+
+        int maxRank = 0;
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                int rank = adjList[i].size() + adjList[j].size();
+                if (adjList[i].count(j)) {
+                    rank -= 1;  // Remove 1 for duplicate edge
+                }
+                maxRank = max(maxRank, rank);
+            }
+        }
+
+        return maxRank;
+    }
+};
