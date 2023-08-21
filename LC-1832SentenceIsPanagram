@@ -1,0 +1,18 @@
+#include <iostream>
+#include <string>
+#include <unordered_set>
+
+class Solution {
+public:
+    bool checkIfPangram(std::string sentence) {
+        std::unordered_set<char> s;
+
+        for (int i = 0; i < sentence.length(); i++) {
+            if (s.count(sentence[i]) == 0) {
+                s.insert(sentence[i]);
+            }
+        }
+
+        return s.size() == 26; // A pangram has 26 unique letters
+    }
+};
