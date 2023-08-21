@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool repeatedSubstringPattern(string s) {
+        string doubled = s + s;
+        string sub = doubled.substr(1, doubled.size() - 2);
+        return sub.find(s) != string::npos;
+    }
+};
+//string doubled = s + s;:
+
+// Input s: "abcabc"
+// doubled: "abcabcabcabc"
+// string sub = doubled.substr(1, doubled.size() - 2);:
+
+// doubled.size(): 12
+// doubled.size() - 2: 10
+// doubled.substr(1, 10): "bcabcabcab"
+// sub: "bcabcabcab"
+// return sub.find(s) != string::npos;:
+
+// Now, we're checking if the original string "abcabc" can be found in the modified substring "bcabcabcab".
+// The find function will look for "abcabc" in "bcabcabcab".
+// Since "abcabc" can indeed be found in "bcabcabcab" starting from index 2, find will return 2.
+// string::npos is a constant that represents the value returned when the substring is not found.
+// So, 2 != string::npos is true.
