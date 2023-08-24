@@ -1,0 +1,46 @@
+class Solution {
+public:
+    int numEnclaves(vector<vector<int>>& grid) {
+        int n=grid.size();
+        int m=grid[0].size();
+        int dir[][2]={{-1,0},{1,0},{0,1},{0,-1}};
+        vector<vector<int>>visited(n,vector<int>(m,-1));
+        int cntOne=0;
+        //counting all Ones
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]==1){
+                    cntOne++;
+                }
+            }
+        }
+        int cntBndOne=0;
+        queue<pair<int,int>>q;
+        //Putting Boundary Ones in queue
+        for(int i=0;i<n;i++){
+           for(int j=0;j<m;j++){
+               if((i==0 || i==n-1 ||j==0 ||j==m-1)&&grid[i][j]==1){
+                   q.push(make_pair(i,j));
+                   visited[i][j]=1;
+               }
+           }
+        }
+        while(!q.empty()){
+            pair<int,int> p=q.front();
+            q.pop();
+            cntBndOne+=1;
+            int x=p.first;
+            int y=p.second;
+            for(int k=0;k<4;k++){
+                int newX=x+dir[k][0];
+                int newY=y+dir[k][1];
+                if(newX>=0 && newY>=0 &&newX<n && newY<m && grid[newX][newY]==1 && visited[newX][newY]==-1){
+                    q.push(make_pair(newX,newY));
+                    visited[newX][newY]=1;
+                }
+            }
+        }
+        return cntOne-cntBndOne;
+        
+    }
+};
