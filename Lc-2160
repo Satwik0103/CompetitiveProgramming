@@ -1,0 +1,27 @@
+// class Solution {
+// public:
+//     int minimumSum(int num) {
+//         vector<int> arr;
+//         while(num){
+//             arr.push_back(num%10);
+//             num = num/10;
+//         }
+//         sort(arr.begin(),arr.end());
+//         int new1=0,new2=0;
+//         new1 = 10*arr[0]+arr[2];
+//         new2 = 10*arr[1]+arr[3];
+//         return new1+new2;
+//     }
+// };
+class Solution {
+public:
+    int minimumSum(int num) {
+        int arr[4]; // declaring an array
+        arr[0] = num%10; //storing each digit in this array
+        arr[1] = (num/10)%10;
+        arr[2] = (num/100)%10;
+        arr[3] = (num/1000)%10;
+        sort(arr, arr + 4);
+        return (arr[0]*10+arr[2]) + (arr[1]*10+arr[3]); //for ex{2,2,3,9} --> {23+29}
+    }
+};
