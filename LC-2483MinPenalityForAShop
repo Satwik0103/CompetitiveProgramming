@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int bestClosingTime(string custom) { //NNNYN   //YYNY
+        int y=0,n=0;
+        for(auto i:custom){
+            if(i=='Y')y++;   //1      //3
+        }
+        int mn = INT_MAX,index,penalty;
+        for(int i=0;i<custom.size();i++){
+            penalty = y + n;  //1  //3,2,1,2
+            if(penalty<mn){
+                mn = penalty;  //1   //3,2,1
+                index = i;  //0   //0,1,2
+            }
+            if(custom[i]=='Y')y--;  //2,1,0
+            else n++; //n=1   //1
+        }
+        penalty = y + n;  //1
+        if(penalty<mn){   
+                mn = penalty;
+                index = custom.size();
+        }
+        return index;
+    }
+};
