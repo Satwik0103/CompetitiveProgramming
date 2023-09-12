@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int minDeletions(string s) {
+        map<char, int> mp;
+        set<int> used_freq;
+        int deletion = 0;
+        for (char c : s) {
+            mp[c]++;
+        }
+        for (auto j : mp) {
+            int freq = j.second;
+
+            while (freq>0 && used_freq.count(freq) == 1) {  //as we need to delete letter so we will decrement
+                freq--;   //and if freq of two  or more element reaches 0 that means it is gone from string so 2 elements can have 0 freq
+                deletion++;
+            }
+            cout<<freq<<endl;
+            used_freq.insert(freq);
+        }
+        return deletion;
+    }
+};
