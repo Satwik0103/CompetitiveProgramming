@@ -1,0 +1,52 @@
+// class Solution {
+// public:
+//     int integerBreak(int n) {
+//         vector<int>dp(5,-1);
+//         if(n==1)
+//             return 1;
+//         if(n==2)
+//             return 1;
+//         if(n==3)
+//             return 2;
+//             if(n==5)
+//             return 6;
+//         dp[1]=1;
+//         dp[2]=2;
+//         dp[3]=3;
+//         dp[4]=4;
+
+//         int res=n/3;
+       
+//         int rem=n%3;
+//         if(rem==1)
+//         return pow(dp[3],res-1)*dp[2]*dp[2];
+  
+//         else if(rem==2)
+//         return pow(dp[3],res)*rem; 
+//         else
+//         return pow(dp[3],res);
+        
+
+        
+//     }
+// };
+
+class Solution {
+public:
+    int integerBreak(int n) {
+        if (n <= 3) {
+            return n - 1;
+        }
+
+        int quotient = n / 3;
+        int remainder = n % 3;
+
+        if (remainder == 0) {
+            return pow(3, quotient);
+        } else if (remainder == 1) {
+            return pow(3, quotient - 1) * 4;
+        } else {
+            return pow(3, quotient) * 2;
+        }
+    }
+};
