@@ -1,0 +1,55 @@
+// class Solution {
+// public:
+//     void setZeroes(vector<vector<int>>& matrix) {
+//         int n=matrix.size();
+//         int m=matrix[0].size();
+//         vector<int>ans;
+//         for(int i=0;i<n;i++){
+//             for(int j=0;j<m;j++){
+//                 if(matrix[i][j]==0){
+//                     ans.push_back(i);
+//                     ans.push_back(j);
+//                 }
+//             }
+//         }
+
+//         for(int k=0;k<ans.size();k++){
+//             if(k%2==0){
+//                 for(int j=0;j<m;j++){
+//                     matrix[ans[k]][j]=0;
+//                 }
+//             }
+//             else{
+//                  for(int i=0;i<n;i++){
+//                     matrix[i][ans[k]]=0;
+//                 } 
+//             }
+//         }
+        
+//     }
+// };
+
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        int m = matrix[0].size();
+        unordered_set<int> setRows; 
+        unordered_set<int> setColumns; 
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(matrix[i][j] == 0){
+                    setRows.insert(i);
+                    setColumns.insert(j);
+                }
+            }
+        }
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(setRows.count(i) > 0 || setColumns.count(j) > 0){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+};
