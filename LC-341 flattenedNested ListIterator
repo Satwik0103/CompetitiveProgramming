@@ -27,3 +27,25 @@ private:
         }
     }
 };
+
+//Javascript
+function flattenList(nestedList) {
+    const flattenedList = [];
+
+    function flatten(nestedItem) {
+        if (Array.isArray(nestedItem)) {
+            for (const item of nestedItem) {
+                flatten(item);
+            }
+        } else {
+            flattenedList.push(nestedItem);
+        }
+    }
+
+    flatten(nestedList);
+    return flattenedList;
+}
+
+const nestedList = [1, [2, 3], [4, [5, 6]]];
+const flattenedList = flattenList(nestedList);
+console.log(flattenedList); // Output: [1, 2, 3, 4, 5, 6]
