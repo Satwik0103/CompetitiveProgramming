@@ -1,0 +1,27 @@
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        if(s.length()<=1)
+        return s;
+        int start=0;
+        int maxlen=1;
+      for(int i=0;i<s.length();i++){
+          int len1=checkPallindrome(s,i,i);
+          int len2=checkPallindrome(s,i,i+1);
+          int res=max(len1,len2);
+          if(maxlen<res){
+              maxlen=res;
+              start=i-(res-1)/2;
+          }
+      }
+      return s.substr(start,maxlen);
+    }
+    //Expand around centre
+    int checkPallindrome(string s,int left,int right){
+        while(left>=0 && right<s.length() && s[left]==s[right]){
+            left--;
+            right++;
+        }
+        return right-left-1;
+    }
+};
