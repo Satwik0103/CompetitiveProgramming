@@ -1,0 +1,66 @@
+// class SeatManager {
+// public:
+//   vector<int>ans;
+//     SeatManager(int n) {
+//           for(int i=0;i<n;i++){
+//               ans.push_back(0);
+//           }
+        
+//     }
+    
+//     int reserve() {
+//         int t=-1;
+//         for(int i=0;i<ans.size();i++){
+//             if(ans[i]==0){
+//                 ans[i]=1;
+//                 t=i;
+//                 break;
+//             }
+        
+//         }
+//         return t+1;
+//     }
+    
+//     void unreserve(int seatNumber) {
+//         for(int i=0;i<ans.size();i++){
+//             if(i==seatNumber-1){
+//                 ans[i]=0;
+//                 break;
+//             }
+//         }
+//     }
+// };
+
+// /**
+//  * Your SeatManager object will be instantiated and called as such:
+//  * SeatManager* obj = new SeatManager(n);
+//  * int param_1 = obj->reserve();
+//  * obj->unreserve(seatNumber);
+//  */
+class SeatManager {
+private:
+    int last;
+    // This is a priority queue of integers. The priority queue is set to use std::greater<int>, which means it will always return the smallest value (the seat number closest to 1) when you call pq.top(). This ensures that seats are allocated in ascending order.
+    std::priority_queue<int, std::vector<int>, std::greater<int>> pq;
+
+public:
+    SeatManager(int n) : last(0) {}
+
+    int reserve() {
+        if (pq.empty()) {
+            return ++last;
+        } else {
+            int seat = pq.top();
+            pq.pop();
+            return seat;
+        }
+    }
+
+    void unreserve(int seatNumber) {
+        if (seatNumber == last) {
+            --last;
+        } else {
+            pq.push(seatNumber);
+        }
+    }
+};
