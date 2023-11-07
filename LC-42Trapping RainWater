@@ -1,0 +1,89 @@
+// // class Solution {
+// // public:
+// // int maxEleLeft=0;
+// // int maxEleRight=0;
+// // int maxLeftHeight(int start,int end,vector<int>&height){
+// //         for(int i=end-1;i>=start;i--){
+// //             if(height[i]>maxEleLeft){
+// //                 maxEleLeft=height[i];
+// //                 break;
+// //             }
+// //         }
+// //         cout<<"MaxEleLeft for "<<end<<maxEleLeft<<endl;
+// //         return maxEleLeft;
+// //     }
+// //     int maxRightHeight(int start,int end,vector<int>&height){
+// //         int maxEleRight=0;
+// //         for(int i=start+1;i<end;i++){
+// //             if(height[i]>maxEleRight){
+// //                 maxEleRight=height[i];
+// //                 break;
+// //             }
+// //         }
+// //         cout<<"MaxEleRight for"<<start<<maxEleRight<<endl;
+// //         return maxEleRight;
+// //     }
+// //     int trap(vector<int>& height) {
+// //          int cap=0;
+// //          int res=0;
+// //         for(int i=0;i<height.size();i++){
+// //             int leftHeight=maxLeftHeight(0,i,height);
+// //             int rightHeight=maxRightHeight(i,height.size(),height);
+// //         res=min(leftHeight,rightHeight)-height[i];
+// //         cout<<i<<"for"<<res<<endl;
+// //         if(res>0){
+// //         cap+=res;
+// //         }
+
+// //         }
+// //         return cap;
+// //     }
+// // };
+// class Solution {
+// public:
+//     int trap(vector<int>& height) {
+//         int n = height.size();
+//         if (n <= 2) return 0;
+
+//         vector<int> maxLeft(n, 0);  // to store the maximum height to the left
+//         vector<int> maxRight(n, 0); // to store the maximum height to the right
+//         //Storing maxLeftValueAtEachPoint
+//         int leftMax = 0;
+//         for (int i = 0; i < n; i++) {
+//             maxLeft[i] = leftMax;
+//             leftMax = max(leftMax, height[i]);
+//         }
+
+//          //Storing maxRightValueAtEachPoint
+//         int rightMax = 0;
+//         for (int i = n - 1; i >= 0; i--) {
+//             maxRight[i] = rightMax;
+//             rightMax = max(rightMax, height[i]);
+//         }
+
+//         int trappedWater = 0;
+//         for (int i = 0; i < n; i++) {
+//             int minSide = min(maxLeft[i], maxRight[i]);
+//             if (minSide > height[i]) {
+//                 //Capacity is min(maxLeft,maxRight)-h[i];
+//                 trappedWater += minSide - height[i];
+//             }
+//         }
+
+//         return trappedWater;
+//     }
+// };
+
+class Solution {
+public:
+    //total water is trapped into the bars
+    int trap(vector<int>& h) {
+        int l=0,r=h.size()-1,lmax=INT_MIN,rmax=INT_MIN,ans=0;
+        while(l<r){
+            lmax=max(lmax,h[l]);
+            rmax=max(rmax,h[r]);
+            ans+=(lmax<rmax)?lmax-h[l++]:rmax-h[r--];
+        }
+        return ans;
+    }
+};
