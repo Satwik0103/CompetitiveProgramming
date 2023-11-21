@@ -1,0 +1,69 @@
+// class Solution {
+// public:
+// int reverse(int value){
+//     int newNum=0;
+//     while(value>0){
+//         int rem=value%10;
+//         newNum=newNum*10+rem;
+//         value=value/10;
+//     }
+//     return newNum;
+// }
+//     int countNicePairs(vector<int>& nums) {
+//         int cnt=0;
+//         map<int,int>mp;
+//         vector<int>revNums;
+//         for(int i=0;i<nums.size();i++){
+//             int revNumber=reverse(nums[i]);
+//             revNums.push_back(revNumber);
+//         }
+//         for(int j=0;j<nums.size();j++){
+//             for(int k=0;k<revNums.size();k++){
+//                 if(j!=k){
+//                    mp[nums[j]+revNums[k]]++;
+//                 }
+//             }
+//         }
+//         for(auto k:mp){
+//             cout<<k.first<<" "<<k.second<<endl;
+//             if(k.second%2==0){
+//                 cnt=cnt+k.second/2;
+//             }
+//         }
+//         return cnt;
+//     }
+// };
+
+class Solution {
+public:
+    int reverse(int num) {
+        int rev = 0;
+        while (num > 0) {
+            rev = rev * 10 + num % 10;
+            num /= 10;
+        }
+        return rev;
+    }
+
+    int countNicePairs(std::vector<int>& nums) {
+        const int mod = 1000000007;
+
+        int len = nums.size();
+        for (int i = 0; i < len; ++i)
+            nums[i] = nums[i] - reverse(nums[i]);
+
+        std::sort(nums.begin(), nums.end());
+
+        long res = 0;
+        for (int i = 0; i < len - 1; ++i) {
+            long cont = 1;
+            while (i < len - 1 && nums[i] == nums[i + 1]) {
+                cont++;
+                i++;
+            }
+            res = (res % mod + (cont * (cont - 1)) / 2) % mod;
+        }
+
+        return static_cast<int>(res % mod);
+    }
+};
