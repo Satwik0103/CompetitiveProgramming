@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int findSpecialInteger(vector<int>& arr) {
+        map<int,int>mp;
+        int sum=0;
+        for(int i=0;i<arr.size();i++){
+            mp[arr[i]]++;
+        }
+        for(auto k:mp){
+            if(k.second>arr.size()/4){
+                return k.first;
+            }
+        }
+        return -1;
+        
+    }
+};
