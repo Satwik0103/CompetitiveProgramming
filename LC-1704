@@ -1,0 +1,52 @@
+class Solution {
+public:
+int countVowel(string splitStr){
+    int count=0;
+    for(auto a:splitStr){
+        if(a=='a'||a=='e'||a=='i'||a=='o'||a=='u'||a=='A'||a=='E'||a=='I'||a=='O'||a=='U'){
+            count++;
+        }
+    }
+    return count;
+}
+    bool halvesAreAlike(string s) {
+        string leftStr=s.substr(0,s.length()/2);
+      //  cout<<leftStr<<endl;
+        string rightStr=s.substr(s.length()/2,s.length());
+     //   cout<<rightStr<<endl;
+        int leftcnt=countVowel(leftStr);
+     //   cout<<leftcnt;
+        int rightCnt=countVowel(rightStr);
+      //  cout<<rightCnt;
+        if(leftcnt==rightCnt){
+            return true;
+        }
+        return false;
+        
+        
+    }
+};
+
+class Solution {
+public:
+    bool halvesAreAlike(string s) {
+        auto countVowels = [](const string& str) {
+            unordered_set<char> vowels{'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
+            int count = 0;
+            for (char c : str) {
+                if (vowels.count(c) > 0) {
+                    count++;
+                }
+            }
+            return count;
+        };
+
+        int length = s.length();
+        int midPoint = length / 2;
+
+        string firstHalf = s.substr(0, midPoint);
+        string secondHalf = s.substr(midPoint);
+
+        return countVowels(firstHalf) == countVowels(secondHalf);
+    }
+};
