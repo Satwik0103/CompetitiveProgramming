@@ -1,0 +1,38 @@
+// class Solution {
+// public:
+//     int maximumScore(int a, int b, int c) {
+//         int res=0;
+//         if(a+b>=c && b+c>=a && a+c>=b){
+//          res=(a+b+c)/2;
+//         }
+//          else{
+//              int maxEle=max(max(a,b),c);
+             
+//                  if(a!=maxEle){
+//                      res+=a;
+//                  }
+//                  if(b!=maxEle){
+//                      res+=b;
+//                  }
+//                  if(c!=maxEle){
+//                      res+=c;
+//                  }
+//          }
+
+//         return res;
+        
+//     }
+// };
+class Solution {
+public:
+    int maximumScore(int a, int b, int c) {
+        int sum = a + b + c;
+        int maxVal = max({a, b, c});
+        
+        if (2 * maxVal <= sum) {
+            return sum / 2;
+        } else {
+            return sum - maxVal;
+        }
+    }
+};
