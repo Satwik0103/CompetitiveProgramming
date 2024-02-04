@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    
+//This wont work as s1="YZ" s2="ZY" ans is same acc to ASCII value  
+
+//     string s1;
+//     cin>>s1;
+//     string s2;
+//     cin>>s2;
+//     int v1=0;
+//     int v2=0;
+//     for(auto h:s1){
+//         h=toupper(h);
+//         v1+=int(h);
+        
+//     }
+//      for(auto z:s2){
+//         z=toupper(z);
+//         v2+=int(z);
+        
+//     }
+//     if(v1==v2)
+//     cout<<0<<endl;
+//     else if(v1>v2)
+//     cout<<1<<endl;
+//     else
+//     cout<<-1<<endl;
+
+
+
+
+
+    string s1;
+    cin>>s1;
+    string s2;
+    cin>>s2;
+    transform(s1.begin(), s1.end(), s1.begin(), ::tolower); 
+    transform(s2.begin(), s2.end(), s2.begin(), ::tolower); 
+    int res=s1.compare(s2);
+    if(res==0)
+    cout<<0<<endl;
+    else if(res>0)
+    cout<<1<<endl;
+    else
+    cout<<-1<<endl;
+}
