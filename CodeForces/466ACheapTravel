@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int solve(int n,int m,int a,int b,int dis,int value){
+    if(dis>=n){
+        return value;
+    }
+    int route1=solve(n,m,a,b,dis+1,value+a);
+    int route2=solve(n,m,a,b,dis+m,value+b);
+    return min(route1,route2);
+}
+int solve1(int n, int m, int a, int b, int dis, int value, vector<vector<int>>& dp) {
+    if (dis >= n) {
+        return value;
+    }
+    if (dp[dis][value] != -1) {
+        return dp[dis][value];
+    }
+    int route1 = solve1(n, m, a, b, dis + 1, value + a, dp);
+    int route2 = solve1(n, m, a, b, dis + m, value + b, dp);
+    dp[dis][value] = min(route1, route2);
+    return dp[dis][value];
+}
+
+int main() {
+    int n,m,a,b;
+    cin>>n>>m>>a>>b;
+    // int dis=0;
+    // int value=0;
+    // vector<vector<int>>dp(n+1,vector<int>(1000*(n+m+1),-1));
+    // int route1=solve1(n,m,a,b,dis+1,value+a,dp);
+    // int route2=solve1(n,m,a,b,dis+m,value+b,dp);
+    // int minAmt=min(route1,route2);
+    // cout<<minAmt;
+    #include <iostream>
+
+
+
+    // Calculate the total cost of buying individual tickets
+    int individualCost = n * a;
+
+    // Calculate the cost of buying special tickets
+    int specialTicketCost = (n / m) * b + min((n % m) * a, b);
+
+    // Output the minimum cost
+    cout << min(individualCost, specialTicketCost) << endl;
+
+
+    
+   return 0;
+}
