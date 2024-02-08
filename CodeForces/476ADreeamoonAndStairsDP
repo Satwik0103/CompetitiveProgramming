@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int countMoves(int n,int m,vector<int>&dp){
+    if(n<=0){
+        return 0;
+    }
+    if(dp[n]!=-1){
+        return dp[n];
+    }
+     int move1=countMoves(n-1,m,dp)+1;
+     int move2=countMoves(n-2,m,dp)+1;
+     int res= min(move1,move2);
+    dp[n]= min(move1,move2);
+    return res;
+    
+}
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+    if(n<m){
+        cout<<-1;
+        return 0;
+    }
+    int moves=0;
+    vector<int>dp(n+1,-1);
+    int ans=countMoves(n,m,dp);
+    if(ans%m==0){
+        cout<<ans<<endl;
+    }
+    else{
+        if(ans<m)
+        cout<<ans+(m-ans)<<endl;
+        else
+        cout<<ans+m-(ans%m)<<endl;
+    }
+    return 0;
+}
