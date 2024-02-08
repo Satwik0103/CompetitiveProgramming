@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+
+int main() {
+    
+    int s,n;
+    cin>>s>>n;
+   vector<pair<int, int>> a;
+
+    for (int i = 0; i < n; ++i) {
+        int x, y;
+        cin >> x >> y;
+        a.push_back({x, y});
+    }
+
+    // Sort dragons based on their strength in ascending order
+    sort(a.begin(), a.end());
+     
+    if(a[0].first>s){
+        cout<<"NO";
+        return 0;
+    }
+    int k=0;
+    while(k<n&&a[k].first<s){
+        s+=a[k].second;
+        k++;
+    }
+    if(k!=n){
+        cout<<"NO"<<endl;
+    }
+    else{
+        cout<<"YES"<<endl;
+    }
+        
+
+    return 0;
+}
