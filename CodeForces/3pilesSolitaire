@@ -1,0 +1,54 @@
+You are playing a solitaire game with three piles of stones of sizes a, b, and c
+respectively. Each turn you choose two different non-empty piles, take one stone from
+each, and add 1 point to your score. The game stops when there are fewer than two
+non-empty piles (meaning there are no more available moves)
+Given three integers a, b, and c , return the maximum score you can get.
+Example 1:
+Input: a=2,b=4, c - 6
+Output: 6
+Explanation: The starting state is (2, 4, 6). One optimal set of moves is:
+Take from 1st and 3rd piles, state is now (1, 4, 5)
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int countMoves(int n,int m,vector<int>&dp){
+    if(n<=0){
+        return 0;
+    }
+    if(dp[n]!=-1){
+        return dp[n];
+    }
+     int move1=countMoves(n-1,m,dp)+1;
+     int move2=countMoves(n-2,m,dp)+1;
+     int res= min(move1,move2);
+    dp[n]= min(move1,move2);
+    return res;
+    
+}
+
+int main() {
+    int a,b,c;
+    cin>>a>>b>>c;
+        int score = 0;
+        while (true) {
+             int piles[] = {a, b, c};
+            sort(piles, piles + 3, greater<int>());
+
+            if (piles[1] == 0) {
+                break;
+            }
+            piles[0]--;
+            piles[1]--;
+            score++;
+            a = piles[0];
+            b = piles[1];
+            c = piles[2];
+        }
+
+        cout<< score;
+
+
+    return 0;
+}
