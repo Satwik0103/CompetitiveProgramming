@@ -1,0 +1,57 @@
+
+Java
+class Solution {
+    public String customSortString(String order, String s) {
+    StringBuilder s1 = new StringBuilder();
+    StringBuilder s2 = new StringBuilder();
+     int a[]=new int[26];
+     for(char k:order.toCharArray()){
+         a[k-'a']++;
+     }
+     for(char f:s.toCharArray()){
+         if(a[f-'a']==0){
+              s2.append(f);
+         }
+         else a[f-'a']++;
+     }
+     for(char h:order.toCharArray()){
+         while(a[h-'a']>1){
+             s1.append(h);
+             a[h-'a']--;
+         }
+     }
+     
+     return s1.append(s2).toString();
+    }
+    
+}
+
+C++
+class Solution {
+public:
+    string customSortString(string order, string s) {
+     string s1,s2;
+    // Initialize 26 char array by 0
+     int a[26]={0};
+     //Increment vlaue of lements present in order array by 1
+     for(auto k:order){
+         a[k-'a']++;
+     }
+    //Now traverse s if elemnt not present pt it in a diff string else increase counter by 1
+     for(auto f:s){
+         if(a[f-'a']==0){
+             s2+=f;
+         }
+         else a[f-'a']++;
+     }
+     //Traverse again in order array while element value >1put in string 
+     for(auto h:order){
+         while(a[h-'a']>1){
+             s1+=h;
+             a[h-'a']--;
+         }
+     }
+     //Combine both string
+     return s1+s2;
+    }
+};
