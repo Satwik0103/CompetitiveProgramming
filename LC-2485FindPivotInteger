@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int pivotInteger(int n) {
+        int nElementSum=n*(n+1)/2;//36
+        int prefixSum=0;
+       for(int i=1;i<=n;i++){
+        prefixSum+=i;
+        if(prefixSum==i+nElementSum-prefixSum){
+            return i;
+        }
+       }
+       return -1;
+
+    }
+};
