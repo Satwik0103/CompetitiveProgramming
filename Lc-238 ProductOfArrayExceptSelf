@@ -1,0 +1,28 @@
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> output(n, 1);
+        
+        int prefix_product = 1;
+        for (int i = 0; i < n; i++) {
+            output[i] *= prefix_product;
+            cout<<i<<"  "<<output[i]<<endl;
+            prefix_product *= nums[i];
+            cout<<"Prefix"<<prefix_product<<endl;
+        }
+        cout<<"GHGHGHGHHG"<<endl;
+        int suffix_product = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            output[i] *= suffix_product;
+            cout<<i<<"   "<<output[i]<<endl;
+            suffix_product *= nums[i];
+            cout<<"Suffix"<<suffix_product<<endl;
+        }
+        
+        return output;
+    }
+};
