@@ -1,0 +1,40 @@
+class Solution {
+public:
+    ListNode* mergeInBetween(ListNode* list1, int a, int b, ListNode* list2) {
+        ListNode *head = list1;
+        ListNode *val = head; // Store the original head of list1
+        
+        // Find the node before the sublist to be removed
+        for (int cnt = 0; cnt < a - 1 && head != nullptr; cnt++) {
+            head = head->next;
+        }
+        if (head == nullptr) {
+            // 'a' is out of range
+            return val;
+        }
+        
+        // Connect list3 to list2
+        ListNode *list3 = head;
+        for (int cnt = a; cnt <= b && head != nullptr; cnt++) {
+            head = head->next;
+        }
+        if (head == nullptr) {
+            // 'b' is out of range
+            return val;
+        }
+        
+        // Connect list3 to list2
+        list3->next = list2;
+        
+        // Advance list2 to the last node
+        while (list2 != nullptr && list2->next != nullptr) {
+            list2 = list2->next;
+        }
+        
+        // Connect list2 to the node after the sublist
+        list2->next = head->next;
+        
+        // Return the modified list1
+        return val;
+    }
+};
